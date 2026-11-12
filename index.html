@@ -2,6 +2,8 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
+<meta name="author" content="Lê Hoàng Hải">
+<meta name="copyright" content="© Lê Hoàng Hải · BartonLab Pro">
 <title>BartonLab Pro – Dao Động Cưỡng Bức & Con Lắc Barton</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -202,6 +204,44 @@ footer{padding:32px 6vw;color:var(--mut);font-size:14px;border-top:1px solid var
   #pbot .btns::-webkit-scrollbar{display:none}#pbot button{flex:none;padding:8px 12px;font-size:13px;white-space:nowrap}#pbot small{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+/* ===== WATERMARK · NHÓM · KẾT NỐI TỪ XA ===== */
+.wmt{position:fixed;inset:0;z-index:220;pointer-events:none;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='230'%3E%3Ctext x='24' y='130' transform='rotate(-24 190 115)' font-family='Be Vietnam Pro,Arial,sans-serif' font-size='17' font-weight='700' fill='%23808080'%3E%C2%A9 L%C3%AA Ho%C3%A0ng H%E1%BA%A3i %C2%B7 BartonLab Pro%3C/text%3E%3C/svg%3E")}
+.wmk{position:fixed;left:12px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:220;font:600 11px/1 'Be Vietnam Pro',sans-serif;color:var(--mut);opacity:.6;pointer-events:none;letter-spacing:.02em;white-space:nowrap}
+#pres .wmk{left:50%;transform:translateX(-50%);bottom:auto;top:calc(env(safe-area-inset-top,0px) + 7px)}
+body.pon>.wmx{display:none}
+.cdot{position:fixed;right:8px;top:calc(env(safe-area-inset-top,0px) + 8px);width:11px;height:11px;border-radius:50%;background:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.2);opacity:.6;z-index:230;cursor:pointer;display:none}.cdot.on{display:block}
+#ptim{opacity:.28;transition:opacity .25s}#ptim:hover{opacity:.9}
+#fgt{display:none}
+.tm{grid-column:1/-1;display:flex;flex-direction:column;gap:2.4vh;width:100%}
+.tm h2{margin:0}.tsub{color:var(--mut);margin:6px 0 0;font-size:clamp(14px,1.7vw,20px)}
+.tg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tc{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.tc.own{grid-column:1/-1;border-left:4px solid var(--red)}
+.tc b{display:block;font-size:clamp(15px,1.8vw,22px)}.tc small{color:var(--mut);font-size:clamp(12px,1.2vw,14px)}
+.av{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:700 16px 'Be Vietnam Pro',sans-serif;color:#fff;background:linear-gradient(135deg,#d71920,#a80f18)}
+.tc.own .av{width:60px;height:60px;font-size:20px}
+@media(max-width:820px){.tg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#cnx{position:fixed;inset:0;z-index:400;background:rgba(10,12,18,.8);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px}#cnx[hidden]{display:none}
+.cbox{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:18px;width:min(420px,100%);max-height:92vh;overflow:auto}
+.ctabs{display:flex;gap:6px;margin-bottom:12px}.ctabs button{flex:1}.ctabs #ctX{flex:none}
+.cbox p{font-size:14px;color:var(--mut);margin:0 0 12px}
+#cQR{display:block;margin:12px auto;width:200px;height:200px;image-rendering:pixelated;background:#fff;border-radius:10px;padding:6px}
+#cPin{text-align:center;font:700 34px/1.1 'JetBrains Mono',monospace;letter-spacing:.12em}
+#cSt,#cMsg{text-align:center;font-size:14px;color:var(--mut);margin:10px 0}
+#cIn{width:100%;font:700 28px 'JetBrains Mono',monospace;text-align:center;letter-spacing:.3em;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);margin-bottom:10px}
+#cMode{display:flex;flex-direction:column;gap:8px}#cMode small{display:block;font-weight:400;opacity:.75}
+#rmt{position:fixed;inset:0;z-index:390;background:#0f1117;color:#f3f4f6;display:flex;flex-direction:column;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(12px + env(safe-area-inset-bottom,0px));overflow:auto}#rmt[hidden]{display:none}
+#rmt .rh{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#9ca3af}
+#rsw{background:#181b24;border:1px solid #2a2f3c;border-radius:16px;padding:14px;touch-action:pan-y}
+#rn{font:800 26px Fraunces,serif}#rti{margin:4px 0 0;font-size:16px;font-weight:600}#rsec{color:#f87171;font-size:12px;font-weight:700}#rtm{float:right;font:600 14px 'JetBrains Mono',monospace;color:#9ca3af}
+.rb{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rb button{height:84px;font-size:20px;font-weight:700}
+.rg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.rg button{padding:12px 2px;font-size:13px}
+#rpad{flex:1;min-height:120px;border:1px dashed #3b4252;border-radius:16px;display:grid;place-items:center;color:#6b7280;font-size:14px;touch-action:none;user-select:none;text-align:center;padding:8px}
+#rnote{font-size:14px;line-height:1.5;color:#d1d5db;margin:6px 0 0}
+#rmt select{width:100%;padding:10px;border-radius:10px;background:#181b24;color:#f3f4f6;border:1px solid #2a2f3c;font:inherit}
+#rmt button{background:#1f2430;color:#f3f4f6;border:1px solid #2f3646;border-radius:12px}#rmt button.p{background:var(--red);border-color:var(--red)}
+#rdot{position:fixed;width:26px;height:26px;margin:-13px;border-radius:50%;border:3px solid #ff2a2a;box-shadow:0 0 14px rgba(255,40,40,.6);z-index:240;pointer-events:none;display:none;transition:left .06s,top .06s}
 </style>
 </head>
 <body>
@@ -212,8 +252,8 @@ footer{padding:32px 6vw;color:var(--mut);font-size:14px;border-top:1px solid var
   <p>Khảo sát Dao động cưỡng bức &amp; Hiện tượng Cộng hưởng cơ học. Kéo con lắc phát động, thay đổi chiều dài dây treo và quan sát sự bứt phá biên độ trực tiếp.</p>
   <div class="by">Đề án nghiên cứu Vật lý: Lê Hoàng Hải · Bộ giải tích số Runge-Kutta bậc 4 (RK4)</div>
   <div class="btns" style="position:relative;margin-top:18px">
-    <button class="p" id="hCta">▶ Bắt đầu trình chiếu 12 Slides (P)</button>
-    <button id="hLab">Vào phòng thí nghiệm</button>
+    <button class="p" id="hCta">▶ Chế độ trình bày</button>
+    <button id="hLab">Phòng thí nghiệm mô phỏng</button>
   </div>
 </header>
 
@@ -228,7 +268,7 @@ footer{padding:32px 6vw;color:var(--mut);font-size:14px;border-top:1px solid var
   <a href="#quiz">Quiz</a>
   <a href="#game">TMD</a>
   <a href="#ai">Trợ lý</a>
-  <button class="p" id="bPres" style="margin-left:auto;padding:6px 14px">▶ Trình chiếu</button>
+  <button class="p" id="bPres" style="margin-left:auto;padding:6px 14px">▶ Trình bày</button>
   <button id="bHelp" aria-label="Phím tắt" style="padding:6px 12px">?</button>
   <button id="bTheme" aria-label="Đổi giao diện sáng tối" style="padding:6px 12px">◐</button>
 </nav>
@@ -434,10 +474,10 @@ footer{padding:32px 6vw;color:var(--mut);font-size:14px;border-top:1px solid var
   <div class="card">
     <h3 style="margin:0 0 8px">Phím tắt &amp; Điều khiển thuyết trình</h3>
     <p style="font-size:14px;line-height:1.9">
-      <b>P</b> bắt đầu trình chiếu · <b>← → Space</b> chuyển slide · <b>Home/End</b> đầu/cuối<br>
-      <b>G</b> tổng quan 12 slides · <b>B</b> màn đen · <b>F</b> toàn màn hình · <b>A</b> tự chạy 15s<br>
+      <b>P</b> vào chế độ trình bày · <b>← → Space</b> chuyển slide · <b>Home/End</b> đầu/cuối<br>
+      <b>G</b> tổng quan các slide · <b>B</b> màn đen · <b>F</b> toàn màn hình · <b>A</b> tự chạy 15s<br>
       <b>L</b> tia laser · <b>D</b> bút vẽ · <b>C</b> xóa nét · <b>S</b> đèn rọi · <b>N</b> ghi chú diễn giả<br>
-      <b>H</b> cử chỉ tay qua camera · <b>V</b> hiện/ẩn khung camera · <b>Esc</b> thoát
+      <b>H</b> cử chỉ tay qua camera · <b>V</b> hiện/ẩn khung camera · <b>K</b> kết nối thiết bị từ xa · <b>Esc</b> thoát
     </p>
     <button class="p" id="hx">Đóng</button>
   </div>
@@ -523,7 +563,7 @@ footer{padding:32px 6vw;color:var(--mut);font-size:14px;border-top:1px solid var
   </div>
 </div>
 
-<footer>BartonLab Pro · Đề án nghiên cứu Vật lý của Lê Hoàng Hải.</footer>
+<footer>BartonLab Pro · Đề án nghiên cứu Vật lý của Lê Hoàng Hải.<br>Nhóm thực hiện: Lê Hoàng Hải, Hùng Anh, Thành Công, Chí Dũng, Hoàng Giang, Nhật Minh, Gia Bảo.</footer>
 
 <script>
 const $=id=>document.getElementById(id),TAU=Math.PI*2,g=9.81;
@@ -533,13 +573,18 @@ const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim
 
 function renderAllMath(root=document.body){
   if(window.renderMathInElement){
-    renderMathInElement(root,{
-      delimiters:[
-        {left:'$$',right:'$$',display:true},
-        {left:'$',right:'$',display:false}
-      ],
-      throwOnError:false
-    });
+    /* KaTeX cảnh báo ký tự tiếng Việt (ả, ơ, ư...) trong \text{} dù vẫn hiển thị đúng: tắt cảnh báo để không hiện lỗi giả */
+    const w=console.warn;console.warn=()=>{};
+    try{
+      renderMathInElement(root,{
+        delimiters:[
+          {left:'$$',right:'$$',display:true},
+          {left:'$',right:'$',display:false}
+        ],
+        throwOnError:false,
+        strict:'ignore'
+      });
+    }finally{console.warn=w}
   }
 }
 
@@ -586,6 +631,13 @@ const SLIDES=[
     cap:'Mô phỏng tương tác 6 con lắc giải bằng thuật toán RK4',
     n:'Chào hội đồng/thầy cô. Giới thiệu tên đề án và đặt câu hỏi mở: Trong 5 con lắc phụ có chiều dài khác nhau, tại sao chỉ duy nhất một con lắc bứt phá biên độ?',
     scene:0
+  },
+  {
+    sec:'GIỚI THIỆU NHÓM',
+    t:'Nhóm thực hiện đề án',
+    b:[],
+    team:true,
+    n:'Giới thiệu các thành viên nhóm, nhấn mạnh Lê Hoàng Hải là chủ đề án, sau đó chuyển sang phần lý thuyết.'
   },
   {
     sec:'PHẦN I · DAO ĐỘNG CƯỠNG BỨC',
@@ -734,6 +786,13 @@ const SLIDES=[
   }
 ];
 
+/* --- SLIDE GIỚI THIỆU NHÓM (sửa vai trò ở đây: ['Tên','Vai trò']) --- */
+const TEAM=[['Lê Hoàng Hải','Chủ đề án · Tác giả'],['Hùng Anh',''],['Thành Công',''],['Chí Dũng',''],['Hoàng Giang',''],['Nhật Minh',''],['Gia Bảo','']];
+function teamHtml(){
+  const ini=n=>n.split(' ').slice(-2).map(w=>w[0]).join('');
+  return `<div class="tm"><div><h2>Nhóm thực hiện đề án</h2><p class="tsub">Đề án nghiên cứu Vật lý <b>Con lắc Barton</b> · Chủ đề án: <b>Lê Hoàng Hải</b></p></div><div class="tg">${TEAM.map(([n,r],i)=>`<div class="tc${i?'':' own'}"><span class="av">${ini(n)}</span><div><b>${n}</b><small>${r||'Thành viên nhóm'}</small></div></div>`).join('')}</div></div>`;
+}
+
 /* --- PRESENTATION CONTROLLER --- */
 let si=0,pOn=false,pT0=0,laser=false,pen=false,spot=false,pdraw=false,slideVidIdx=0;
 function pshow(i){
@@ -744,6 +803,12 @@ function pshow(i){
   b.classList.remove('go');
   void b.offsetWidth;
 
+  if(s.team){
+    b.innerHTML=teamHtml();b.classList.add('go');
+    $('psec').textContent=s.sec;$('pnote').textContent=s.n;
+    $('pcnt').textContent='Slide '+(si+1)+' / '+SLIDES.length;
+    $('pbar').style.width=(si+1)/SLIDES.length*100+'%';return;
+  }
   let mediaHtml='';
   if(s.video){
     const v=YT_VIDEOS[slideVidIdx];
@@ -1339,18 +1404,17 @@ document.querySelectorAll('.cases .card').forEach(c=>{
 $('bPres').onclick=e=>{const r=e.currentTarget.getBoundingClientRect(),p=$('pres');p.style.setProperty('--cx',r.left+r.width/2+'px');p.style.setProperty('--cy',r.top+r.height/2+'px');p.classList.remove('circ');void p.offsetWidth;popen();if(!RED){p.classList.add('circ');setTimeout(()=>p.classList.remove('circ'),900)}};
 
 /* --- CAMERA HAND GESTURES (MEDIAPIPE HANDS) --- */
-function toast(m){const d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#171717;color:#fff;padding:10px 16px;border-radius:99px;z-index:300;font-size:14px;max-width:90vw;text-align:center';document.body.append(d);setTimeout(()=>d.remove(),3500)}
-function flash(t){const d=document.createElement('div');d.textContent=t;d.style.cssText='position:fixed;left:50%;top:45%;transform:translate(-50%,-50%) scale(.6);font:800 100px Fraunces,serif;color:#fff;background:rgba(215,25,32,.88);width:190px;height:190px;border-radius:50%;display:grid;place-items:center;z-index:300;opacity:0;transition:.35s;pointer-events:none';$('pres').append(d);requestAnimationFrame(()=>{d.style.opacity='1';d.style.transform='translate(-50%,-50%) scale(1)'});setTimeout(()=>d.style.opacity='0',500);setTimeout(()=>d.remove(),900)}
+function toast(m){const d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#171717;color:#fff;padding:10px 16px;border-radius:99px;z-index:300;font-size:14px;max-width:90vw;text-align:center';(document.fullscreenElement||document.body).append(d);setTimeout(()=>d.remove(),3500)}
 const MPV='https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/',HID='position:fixed;left:0;top:0;width:2px;height:2px;opacity:.01;pointer-events:none;z-index:-1',SHW='position:fixed;right:12px;bottom:84px;width:150px;border-radius:10px;border:2px solid #d71920;transform:scaleX(-1);z-index:106';
 let cam=null,HD=null,hRun=false,hBusy=false,hLast=-2,hSince=0,hLock=-1,showPrev=false;
 const cv=document.createElement('video');cv.muted=true;cv.playsInline=true;cv.style.cssText=HID;$('pres').append(cv);
 const FGN=['Nắm tay','1: Tiếp','2: Trước','3: Laser','4: Mô phỏng'];
-const fg=document.createElement('div');fg.style.cssText='display:none;position:fixed;right:4vw;top:calc(env(safe-area-inset-top,0px) + 52px);z-index:106;flex-direction:column;align-items:center;gap:4px;pointer-events:none';
+const fg=document.createElement('div');fg.style.cssText='display:none;position:fixed;left:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);opacity:.2;transform:scale(.6);transform-origin:left bottom;transition:opacity .25s;z-index:106;flex-direction:column;align-items:center;gap:4px;pointer-events:none';
 fg.innerHTML='<div id="fgr" style="width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.12)"><div id="fgn" style="width:52px;height:52px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font:800 28px Fraunces,serif;color:var(--red)">–</div></div><small id="fgt" style="color:var(--mut);font-size:12px;text-align:center;max-width:96px"></small>';$('pres').append(fg);
-function fgUpd(c,p){$('fgn').textContent=c>=0?c:'–';$('fgt').textContent=c>=0?FGN[c]:'Giơ tay lên';$('fgr').style.background='conic-gradient(#d71920 '+p*360+'deg,rgba(0,0,0,.12) 0)'}
+function fgUpd(c,p){fg.style.opacity=p>0?.6:.2;$('fgn').textContent=c>=0?c:'–';$('fgt').textContent=c>=0?FGN[c]:'Giơ tay lên';$('fgr').style.background='conic-gradient(#d71920 '+p*360+'deg,rgba(0,0,0,.12) 0)'}
 function loadHands(){return new Promise((ok,no)=>{if(window.Hands)return ok();const s=document.createElement('script');s.src=MPV+'hands.js';s.crossOrigin='anonymous';s.onload=ok;s.onerror=()=>no(new Error('load'));document.head.append(s)})}
 function fingers(L){const w=L[0],d=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);let n=0;[[8,6],[12,10],[16,14],[20,18]].forEach(([t,p])=>{if(d(L[t],w)>d(L[p],w)*1.1)n++});return n}
-function fgFire(c){flash(String(c));if(c===1)pshow(si+1);else if(c===2)pshow(si-1);else if(c===3)tLaser();else{S.run=!S.run;$('bRun').textContent=S.run?'Tạm dừng':'Chạy tiếp'}}
+function fgFire(c){if(c===1)pshow(si+1);else if(c===2)pshow(si-1);else if(c===3)tLaser();else{S.run=!S.run;$('bRun').textContent=S.run?'Tạm dừng':'Chạy tiếp'}}
 function onHands(r){if(!pOn){tCam();return}const L=r.multiHandLandmarks&&r.multiHandLandmarks[0],now=Date.now();let c=-1;
   if(L){c=fingers(L);if(laser){const l=$('plas');l.style.left=(1-L[8].x)*innerWidth+'px';l.style.top=L[8].y*innerHeight+'px'}}
   if(c!==hLast){hLast=c;hSince=now}if(c!==hLock)hLock=hLock===c?hLock:(c===-1||c===0||hLock!==c?-1:hLock);
@@ -1364,11 +1428,183 @@ async function tCam(){
   catch(e){toast('Không tải được thư viện MediaPipe (kiểm tra mạng).')}
 }
 (()=>{
-  const b1=document.createElement('button');b1.id='pH';b1.textContent='Cử chỉ tay (H)';b1.onclick=tCam;$('pbot').querySelector('.btns').append(b1);
+  const b1=document.createElement('button');b1.id='pH';b1.textContent='Cử chỉ (H)';b1.onclick=tCam;$('pbot').querySelector('.btns').append(b1);
   const b2=document.createElement('button');b2.id='pV';b2.textContent='Camera (V)';b2.onclick=tPrev;$('pbot').querySelector('.btns').append(b2);
-  const b3=document.createElement('button');b3.textContent='✋ Thuyết trình cử chỉ tay';b3.onclick=()=>{$('bPres').click();tCam()};$('hCta').parentNode.append(b3);
+  const b3=document.createElement('button');b3.textContent='Điều khiển bằng cử chỉ';b3.onclick=()=>{$('bPres').click();tCam()};$('hCta').parentNode.append(b3);
 })();
 addEventListener('keydown',e=>{if(pOn&&!/INPUT|TEXTAREA/.test(e.target.tagName)){const k=e.key.toLowerCase();if(k==='h')tCam();if(k==='v')tPrev()}});
+
+/* ===== KẾT NỐI THIẾT BỊ TỪ XA (PeerJS · WebRTC ngang hàng) ===== */
+(()=>{
+const PFX='bartonlab-';
+const plain=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent};
+const loadJS=(src,chk)=>new Promise((ok,no)=>{if(chk())return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>no(new Error(src));document.head.append(s)});
+const needPeer=()=>loadJS('https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js',()=>window.Peer);
+const needQR=()=>loadJS('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js',()=>window.qrcode);
+const newPin=()=>String(100000+crypto.getRandomValues(new Uint32Array(1))[0]%900000);
+const fmtPin=p=>p.slice(0,3)+' '+p.slice(3);
+const root=()=>document.fullscreenElement||document.body;
+let role=null,peer=null,hconns=[],cconn=null,lastKey='',HELLO=null,ST=null,elAt=0,pinNow='',wl=null;
+
+/* --- giao diện: watermark, chấm trạng thái, hộp thoại, remote --- */
+const dots=()=>document.querySelectorAll('.cdot').forEach(d=>d.classList.toggle('on',!!role&&role!=='pending'));
+function mkMarks(p){const w=document.createElement('div');w.className='wmx';w.innerHTML='<div class="wmt"></div><div class="wmk">© Lê Hoàng Hải · BartonLab Pro</div><i class="cdot" title="Thiết bị đang kết nối"></i>';w.querySelector('.cdot').onclick=()=>openConn();p.append(w)}
+mkMarks(document.body);mkMarks($('pres'));
+
+const M=document.createElement('div');M.id='cnx';M.hidden=true;
+M.innerHTML=`<div class="cbox">
+<div class="ctabs"><button id="ctH" class="p">Máy trình bày</button><button id="ctC">Thiết bị điều khiển</button><button id="ctX" aria-label="Đóng">✕</button></div>
+<div id="cpH"><p>Tạo mã để thiết bị khác (điện thoại hoặc máy tính) quét QR hoặc nhập PIN và kết nối với máy này.</p>
+<button class="p" id="cGen" style="width:100%">Tạo mã kết nối</button>
+<div id="cShow" hidden><img id="cQR" alt="Mã QR kết nối"><div id="cPin"></div><div id="cSt"></div><button id="cStop" style="width:100%">Kết thúc phiên</button></div></div>
+<div id="cpC" hidden><p>Nhập mã PIN 6 số hiển thị trên máy trình bày, hoặc quét mã QR bằng camera điện thoại.</p>
+<input id="cIn" inputmode="numeric" maxlength="6" placeholder="······" autocomplete="off">
+<button class="p" id="cGo" style="width:100%">Kết nối</button><div id="cMsg"></div>
+<div id="cMode" hidden><button class="p" id="mR">Remote điều khiển<small>Trước / Sau, laser, ghi chú diễn giả</small></button><button id="mS">Đồng bộ màn hình<small>Tự chuyển slide, cuộn trang và con trỏ theo máy trình bày</small></button></div></div>
+</div>`;
+document.body.append(M);
+const R=document.createElement('div');R.id='rmt';R.hidden=true;
+R.innerHTML=`<div class="rh"><span id="rst">Đang kết nối…</span><button id="rx" style="padding:6px 12px">Ngắt kết nối</button></div>
+<div id="rsw"><span id="rtm">00:00</span><small id="rsec"></small><div id="rn">Slide – / –</div><h3 id="rti"></h3></div>
+<div class="rb"><button id="rP">◀ Trước</button><button class="p" id="rN">Tiếp ▶</button></div>
+<div class="rg"><button id="rO">Bắt đầu</button><button id="rL">Laser</button><button id="rD">Bút</button><button id="rS">Rọi</button><button id="rNt">Ghi chú</button><button id="rB">Màn đen</button><button id="rF">Đầu</button><button id="rE">Cuối</button></div>
+<select id="rsel" aria-label="Chuyển tới slide"></select>
+<div id="rpad">Chạm &amp; kéo trong khung này để dùng con trỏ laser trên máy trình bày</div>
+<div style="font-size:12px;color:#9ca3af">Ghi chú diễn giả</div><div id="rnote"></div>`;
+document.body.append(R);
+const dot=document.createElement('div');dot.id='rdot';document.body.append(dot);
+
+function openConn(tab){root().append(M);M.hidden=false;tabSel(tab||(role==='pending'||role==='remote'||role==='sync'?'C':'H'))}
+function tabSel(t){$('cpH').hidden=t!=='H';$('cpC').hidden=t!=='C';$('ctH').classList.toggle('p',t==='H');$('ctC').classList.toggle('p',t==='C')}
+$('ctH').onclick=()=>tabSel('H');$('ctC').onclick=()=>tabSel('C');$('ctX').onclick=()=>M.hidden=true;
+M.onclick=e=>{if(e.target===M)M.hidden=true};
+window.openConn=openConn;
+
+/* --- PHÍA MÁY TRÌNH BÀY (host) --- */
+const hState=()=>{const s=SLIDES[si];return{t:'st',po:pOn,si,sec:plain(s.sec),ti:plain(s.t),note:s.n||'',sc:+(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)).toFixed(4),el:Math.floor((Date.now()-pT0)/1000),lz:laser,pn:pen,sp:spot,bl:blk,nt:!$('pnote').hidden,vid:slideVidIdx}};
+function push(f){document.body.classList.toggle('pon',pOn);if(!hconns.length)return;const m=hState(),k=JSON.stringify({...m,el:0});if(f!==true&&k===lastKey)return;lastKey=k;hconns.forEach(c=>c.open&&c.send(m))}
+setInterval(push,120);
+function hStat(){const r=hconns.filter(c=>c.mode==='remote').length,s=hconns.filter(c=>c.mode==='sync').length;
+  $('cSt').textContent=hconns.length?`${hconns.length} thiết bị đã kết nối`+(r||s?` (${r} remote · ${s} đồng bộ)`:''):'Đang chờ thiết bị kết nối…';dots()}
+function hostStop(){hconns.forEach(c=>{try{c.close()}catch(_){}});hconns=[];if(role==='host'){try{peer&&peer.destroy()}catch(_){}peer=null;role=null}
+  $('cShow').hidden=true;$('cGen').hidden=false;$('cGen').disabled=false;$('cGen').textContent='Tạo mã kết nối';dots()}
+async function hostStart(){
+  const g=$('cGen');g.disabled=true;g.textContent='Đang tạo mã…';
+  try{await needPeer();await needQR()}catch(_){g.disabled=false;g.textContent='Tạo mã kết nối';toast('Không tải được thư viện kết nối. Kiểm tra Internet.');return}
+  if(peer){try{peer.destroy()}catch(_){}}
+  let tries=0;
+  const mk=()=>{pinNow=newPin();peer=new Peer(PFX+pinNow);
+    peer.on('open',()=>{role='host';
+      const q=qrcode(0,'M');q.addData(location.href.split('#')[0].split('?')[0]+'?r='+pinNow);q.make();$('cQR').src=q.createDataURL(6,3);
+      $('cPin').textContent=fmtPin(pinNow);g.hidden=true;$('cShow').hidden=false;hStat()});
+    peer.on('connection',hAccept);
+    peer.on('disconnected',()=>{try{peer.reconnect()}catch(_){}});
+    peer.on('error',e=>{if(e.type==='unavailable-id'&&tries++<5){try{peer.destroy()}catch(_){}mk()}else{g.disabled=false;g.textContent='Thử lại';toast('Lỗi kết nối: '+e.type)}})};
+  mk();
+}
+function hAccept(c){
+  c.mode='?';hconns.push(c);
+  const init=()=>{c.send({t:'hello',ts:SLIDES.map(s=>plain(s.t))});c.send(hState());hStat()};
+  c.open?init():c.on('open',init);
+  c.on('data',m=>hData(c,m));
+  c.on('close',()=>{hconns=hconns.filter(x=>x!==c);hStat()});
+  c.on('error',()=>{});
+}
+function hData(c,m){
+  if(!m||typeof m!=='object')return;
+  if(m.t==='mode'){c.mode=m.m;hStat();return}
+  if(m.t==='lz'){if(!pOn)return;if(m.on===true&&!laser)tLaser();if(m.on===false&&laser)tLaser();
+    if(typeof m.x==='number'){const l=$('plas');l.style.left=m.x*innerWidth+'px';l.style.top=m.y*innerHeight+'px'}return}
+  if(m.t!=='cmd')return;
+  const c0=m.c;
+  if(c0==='open'){if(!pOn)$('bPres').click()}
+  else if(c0==='close'){if(pOn)pclose()}
+  else if(pOn){
+    if(c0==='next')pshow(si+1);else if(c0==='prev')pshow(si-1);else if(c0==='first')pshow(0);else if(c0==='last')pshow(SLIDES.length-1);
+    else if(c0==='goto')pshow(+m.i||0);else if(c0==='laser')tLaser();else if(c0==='pen')tPen();else if(c0==='spot')tSpot();
+    else if(c0==='note')tNote();else if(c0==='blank')tBlk();
+  }
+  push(true);
+}
+let pTm=0;
+const pt=(e,d)=>{if(!hconns.length)return;const n=performance.now();if(!d&&n-pTm<40)return;pTm=n;const m={t:'pt',x:e.clientX/innerWidth,y:e.clientY/innerHeight,d:d?1:0};hconns.forEach(c=>c.open&&c.send(m))};
+addEventListener('pointermove',e=>pt(e,0),{passive:true});addEventListener('pointerdown',e=>pt(e,1),{passive:true});
+$('cGen').onclick=hostStart;$('cStop').onclick=hostStop;
+
+/* --- PHÍA THIẾT BỊ KẾT NỐI (client) --- */
+const msg=t=>$('cMsg').textContent=t;
+async function clientStart(pin){
+  if(!/^\d{6}$/.test(pin)){msg('Mã PIN gồm đúng 6 chữ số.');return}
+  msg('Đang kết nối…');$('cMode').hidden=true;
+  try{await needPeer()}catch(_){msg('Không tải được thư viện kết nối. Kiểm tra Internet.');return}
+  if(role==='host')hostStop();
+  if(peer){try{peer.destroy()}catch(_){}}
+  let done=false;const to=setTimeout(()=>{if(!done)msg('Hết thời gian chờ. Kiểm tra mã PIN và mạng của cả hai thiết bị.')},15000);
+  peer=new Peer();
+  peer.on('open',()=>{cconn=peer.connect(PFX+pin,{reliable:true});
+    cconn.on('open',()=>{done=true;clearTimeout(to);role='pending';pinNow=pin;msg('Đã kết nối. Chọn chế độ:');$('cMode').hidden=false});
+    cconn.on('data',cData);
+    cconn.on('close',()=>endClient('Máy trình bày đã ngắt kết nối.'))});
+  peer.on('error',e=>{clearTimeout(to);msg(e.type==='peer-unavailable'?'Không tìm thấy mã PIN này. Hãy kiểm tra lại.':'Lỗi kết nối: '+e.type)});
+}
+function endClient(t){try{cconn&&cconn.close()}catch(_){}try{peer&&peer.destroy()}catch(_){}
+  cconn=null;peer=null;role=null;R.hidden=true;dot.style.display='none';$('cMode').hidden=true;dots();try{wl&&wl.release()}catch(_){}wl=null;if(t)toast(t)}
+function pick(m){if(!cconn)return;cconn.send({t:'mode',m});role=m;M.hidden=true;dots();
+  history.replaceState(null,'',location.href.split('?')[0]);
+  if(m==='remote'){R.hidden=false;$('rst').textContent='● Đã kết nối · PIN '+fmtPin(pinNow);fillSel();try{navigator.wakeLock.request('screen').then(x=>wl=x)}catch(_){}}
+  if(ST)cData(ST)}
+$('mR').onclick=()=>pick('remote');$('mS').onclick=()=>pick('sync');
+$('cGo').onclick=()=>clientStart($('cIn').value.trim());
+$('cIn').oninput=e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,6)};
+$('rx').onclick=()=>endClient();
+function cData(m){
+  if(!m)return;
+  if(m.t==='hello'){HELLO=m;fillSel()}
+  else if(m.t==='st'){ST=m;if(role==='remote')rUpd(m);else if(role==='sync')sApply(m)}
+  else if(m.t==='pt'&&role==='sync'){if(dot.parentNode!==root())root().append(dot);dot.style.display='block';dot.style.left=m.x*innerWidth+'px';dot.style.top=m.y*innerHeight+'px';dot.style.transform=m.d?'scale(1.5)':'';clearTimeout(dot._t);dot._t=setTimeout(()=>dot.style.display='none',1800)}
+}
+function sApply(m){
+  if(m.po&&!pOn)popen();if(!m.po&&pOn)pclose();
+  if(m.po){
+    if(m.si!==si||!$('pbody').innerHTML)pshow(m.si);
+    if(m.vid!==slideVidIdx){slideVidIdx=m.vid;pshow(si)}
+    if(m.lz!==laser)tLaser();if(m.pn!==pen)tPen();if(m.sp!==spot)tSpot();if(m.bl!==blk)tBlk();if(m.nt!==!$('pnote').hidden)tNote();
+  }else scrollTo({top:m.sc*(document.documentElement.scrollHeight-innerHeight),behavior:'instant'});
+}
+/* --- giao diện Remote --- */
+function fillSel(){const s=$('rsel');if(!HELLO||s.options.length===HELLO.ts.length)return;s.replaceChildren(...HELLO.ts.map((t,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+'. '+t;return o}))}
+function rUpd(m){
+  fillSel();
+  $('rn').textContent=m.po?`Slide ${m.si+1} / ${HELLO?HELLO.ts.length:'–'}`:'Chưa trình bày';
+  $('rsec').textContent=m.po?m.sec:'MÁY TRÌNH BÀY SẴN SÀNG';
+  $('rti').textContent=m.ti;$('rnote').textContent=m.note||'—';
+  $('rO').textContent=m.po?'Thoát':'Bắt đầu';$('rO').classList.toggle('p',!m.po);
+  [['rL','lz'],['rD','pn'],['rS','sp'],['rNt','nt'],['rB','bl']].forEach(([i,k])=>$(i).classList.toggle('p',!!m[k]));
+  $('rsel').value=m.si;elAt=Date.now();
+}
+setInterval(()=>{if(role==='remote'&&ST&&ST.po){const e=ST.el+Math.floor((Date.now()-elAt)/1000);$('rtm').textContent=String(Math.floor(e/60)).padStart(2,'0')+':'+String(e%60).padStart(2,'0')}},500);
+const send=o=>{if(cconn&&cconn.open)cconn.send(o)},vib=()=>navigator.vibrate&&navigator.vibrate(15);
+const cmd=(id,c)=>$(id).onclick=()=>{vib();send({t:'cmd',c})};
+cmd('rP','prev');cmd('rN','next');cmd('rL','laser');cmd('rD','pen');cmd('rS','spot');cmd('rNt','note');cmd('rB','blank');cmd('rF','first');cmd('rE','last');
+$('rO').onclick=()=>{vib();send({t:'cmd',c:ST&&ST.po?'close':'open'})};
+$('rsel').onchange=e=>send({t:'cmd',c:'goto',i:+e.target.value});
+let sx=0;$('rsw').addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+$('rsw').addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50){vib();send({t:'cmd',c:d<0?'next':'prev'})}},{passive:true});
+const pad=$('rpad');let lzT=0;
+const pp=e=>{const r=pad.getBoundingClientRect();return{x:Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)),y:Math.min(1,Math.max(0,(e.clientY-r.top)/r.height))}};
+pad.onpointerdown=e=>{pad.setPointerCapture(e.pointerId);send({t:'lz',on:true,...pp(e)})};
+pad.onpointermove=e=>{if(!(e.buttons||e.pressure>0))return;const n=performance.now();if(n-lzT<30)return;lzT=n;send({t:'lz',...pp(e)})};
+pad.onpointerup=pad.onpointercancel=()=>send({t:'lz',on:false});
+
+/* --- nút lối vào + phím K + mở bằng QR (?r=PIN) --- */
+(()=>{
+  const b=document.createElement('button');b.textContent='Kết nối thiết bị';b.onclick=()=>openConn('H');$('hCta').parentNode.append(b);
+  const k=document.createElement('button');k.id='pK';k.textContent='Kết nối (K)';k.onclick=()=>openConn('H');$('pbot').querySelector('.btns').append(k);
+})();
+addEventListener('keydown',e=>{if(!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)&&e.key.toLowerCase()==='k')openConn()});
+const qp=new URLSearchParams(location.search).get('r');
+if(/^\d{6}$/.test(qp||'')){openConn('C');$('cIn').value=qp;clientStart(qp)}
+})();
 
 /* --- MAIN ANIMATION LOOP --- */
 let last=performance.now(),tick=0;sync();reset();
