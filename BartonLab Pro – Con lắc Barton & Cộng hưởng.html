@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8"><title>BartonLab Pro – Con lắc Barton & Cộng hưởng</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--bg2:#f4f6fa;--ink:#171717;--mut:#5b6472;--red:#d71920;--red2:#a80f18;--blue:#2563eb;--amb:#f59e0b;--grn:#10b981;--line:#e3e7ee;--card:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#12141a;--bg2:#1a1d26;--ink:#f2f3f6;--mut:#9aa3b2;--line:#2a2f3c;--card:#191c25}}
+:root[data-theme=dark]{--bg:#12141a;--bg2:#1a1d26;--ink:#f2f3f6;--mut:#9aa3b2;--line:#2a2f3c;--card:#191c25}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 'Be Vietnam Pro',system-ui,sans-serif;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px;background-attachment:fixed}
+h1,h2{font-family:'Fraunces',Georgia,serif;margin:0;line-height:1.05}
+header.hero{position:relative;min-height:62vh;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 6vw 36px;overflow:hidden;background:linear-gradient(transparent 40%,var(--bg))}
+#wave{position:absolute;inset:0;width:100%;height:100%}
+.hero h1{font-size:clamp(40px,8vw,96px);font-weight:800;position:relative;max-width:12ch;cursor:default}
+.hero h1:hover{color:var(--red);letter-spacing:.01em;transition:.4s}
+.hero p{position:relative;max-width:56ch;color:var(--mut);margin:14px 0 0}
+.by{position:relative;font-size:14px;color:var(--mut);margin-top:6px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:4px;padding:8px 6vw;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto}
+nav a{color:var(--mut);text-decoration:none;padding:8px 14px;border-radius:99px;white-space:nowrap;font-weight:500;font-size:14px;transition:.25s}
+nav a.on{background:var(--red);color:#fff}
+section{padding:56px 6vw}
+h2{font-size:clamp(28px,4vw,44px);margin-bottom:8px}
+.sub{color:var(--mut);max-width:62ch;margin:0 0 24px}
+.lab{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px}
+@media(max-width:860px){.lab{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+canvas{width:100%;display:block;border-radius:10px;touch-action:none}
+#stage{height:380px;background:var(--bg2);cursor:grab}
+.ctl{display:grid;gap:12px}
+.ctl label{display:flex;justify-content:space-between;font-size:14px;font-weight:500}
+.ctl output{color:var(--red);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--red)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:10px;cursor:pointer;transition:.2s}
+button:hover{border-color:var(--red)}button.p{background:var(--red);color:#fff;border-color:var(--red)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+@media(max-width:560px){.kpi{grid-template-columns:repeat(2,1fr)}}
+.kpi div{background:var(--bg2);border-radius:10px;padding:10px}
+.kpi small{color:var(--mut);display:block;font-size:12px}.kpi b{font-size:20px;font-variant-numeric:tabular-nums}
+.glow{animation:glow 1.2s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 6px rgba(215,25,32,.25),0 0 40px rgba(215,25,32,.4)}}
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+@media(max-width:700px){.charts{grid-template-columns:1fr}}
+.charts canvas{height:190px}.charts h4{margin:0 0 6px;font-size:14px}
+.f{font-family:'Fraunces',serif;font-size:19px;background:var(--bg2);padding:10px 14px;border-radius:10px;margin:8px 0;overflow-x:auto;white-space:nowrap}
+.f i{font-style:italic}.fr{display:inline-block;vertical-align:middle;text-align:center}.fr span{display:block;padding:0 4px}.fr span:first-child{border-bottom:1px solid currentColor}
+.scrolly{height:240vh;position:relative}.pin{position:sticky;top:90px}
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.cases .card{transition:transform .2s;transform-style:preserve-3d}
+.cases h3{margin:0 0 6px;font-size:17px}.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--bg2);color:var(--mut)}
+.chat{display:flex;flex-direction:column;gap:10px}.log{min-height:160px;max-height:300px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.m{padding:9px 13px;border-radius:12px;max-width:88%;background:var(--bg2)}.m.u{align-self:flex-end;background:var(--red);color:#fff}
+.chat form{display:flex;gap:8px}.chat input{flex:1;font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+footer{padding:32px 6vw;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+#pres{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;padding:calc(4vh + env(safe-area-inset-top,0px)) 7vw 3vh;cursor:default}#pres[hidden]{display:none}
+#pbar{position:absolute;left:0;top:0;height:4px;background:var(--red);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+#ptop{display:flex;justify-content:space-between;color:var(--mut);font-size:14px}
+#pbody{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;min-height:0}
+#pbody h2{font-size:clamp(32px,6vw,72px)}#pbody ul{font-size:clamp(17px,2.4vw,28px);max-width:30em;padding-left:1.1em;margin:0}#pbody li{margin:.35em 0}
+#pbody>*{animation:sl .5s cubic-bezier(.2,.8,.2,1) both}#pbody ul li:nth-child(2){animation:sl .5s .1s both}#pbody ul li:nth-child(3){animation:sl .5s .2s both}
+@keyframes sl{from{opacity:0;transform:translateY(18px)}}
+#pv{width:100%;max-width:760px;height:min(34vh,280px);background:var(--bg2);border-radius:12px}
+#pnote{background:var(--bg2);border-left:4px solid var(--amb);padding:10px 14px;border-radius:8px;font-size:15px;color:var(--mut)}
+#ppen{position:fixed;inset:0;z-index:101;pointer-events:none}#ppen.on{pointer-events:auto;cursor:crosshair}
+#plas{position:fixed;z-index:103;width:20px;height:20px;margin:-10px;border-radius:50%;background:#ff2a2a;box-shadow:0 0 14px 6px rgba(255,40,40,.6);pointer-events:none;display:none}
+#pspot{position:fixed;inset:0;z-index:102;pointer-events:none;display:none;background:radial-gradient(circle 170px at var(--sx,50%) var(--sy,50%),transparent 94%,rgba(0,0,0,.85) 100%)}
+#pbot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;z-index:104;position:relative}
+#pbot small{color:var(--mut)}
+#pbody{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:4vw;align-items:center}
+@media(max-width:820px){#pbody{grid-template-columns:1fr;gap:12px}#pbody ul{font-size:16px}}
+#pbody.go{animation:sw .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes sw{from{opacity:0;transform:translateX(calc(var(--dir,1)*70px)) scale(.97);filter:blur(8px)}}
+#pbody ul li:nth-child(4){animation:sl .5s .3s both}
+.vw{position:relative}#pv{width:100%;max-width:none;height:min(56vh,440px);border:1px solid var(--line)}
+.cap{position:absolute;left:12px;bottom:10px;font-size:13px;color:var(--mut);background:color-mix(in srgb,var(--bg) 80%,transparent);padding:3px 10px;border-radius:99px}
+#pres::before{content:'';position:absolute;inset:-20%;z-index:-1;background:radial-gradient(circle at 20% 30%,rgba(215,25,32,.10),transparent 45%),radial-gradient(circle at 80% 70%,rgba(37,99,235,.10),transparent 45%);animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(4%,3%) scale(1.1)}}
+#wipe{position:fixed;inset:0;z-index:200;background:linear-gradient(135deg,#d71920,#a80f18);display:grid;place-items:center;color:#fff;font:800 clamp(32px,8vw,90px)/1 Fraunces,Georgia,serif;transform:translateY(101%);pointer-events:none}
+#wipe.in{transition:transform .5s cubic-bezier(.7,0,.2,1);transform:none}#wipe.out{transition:transform .55s cubic-bezier(.7,0,.2,1);transform:translateY(-101%)}
+#wipe span{opacity:0;transform:translateY(24px);transition:.4s}#wipe.in span{opacity:1;transform:none;transition-delay:.2s}
+#sp{position:fixed;top:0;left:0;right:0;height:3px;background:var(--red);transform-origin:left;transform:scaleX(0);z-index:30}
+#cg{position:fixed;left:0;top:0;width:340px;height:340px;margin:-170px;border-radius:50%;background:radial-gradient(circle,rgba(215,25,32,.11),transparent 65%);pointer-events:none;z-index:4;will-change:transform}
+.rv{opacity:0;transform:translateY(28px) scale(.98);filter:blur(5px)}.rv.in{opacity:1;transform:none;filter:none;transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1),filter .8s;transition-delay:var(--d,0ms)}
+.ch{display:inline-block}.ch.ld{animation:rise .9s calc(var(--i)*45ms) cubic-bezier(.2,.8,.2,1) both}
+.hero h1:hover .ch{animation:bob .7s calc(var(--i)*30ms) ease}
+@keyframes rise{from{transform:translateY(70%) rotate(8deg);opacity:0}}@keyframes bob{50%{transform:translateY(-14%);color:var(--red)}}
+button{position:relative;overflow:hidden}button:active{transform:scale(.96)}
+.rp{position:absolute;border-radius:50%;background:currentColor;opacity:.25;transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}@keyframes rp{to{transform:scale(4);opacity:0}}
+.ck{position:fixed;width:12px;height:12px;margin:-6px;border:2px solid var(--red);border-radius:50%;pointer-events:none;z-index:150;animation:ck .6s ease-out forwards}@keyframes ck{to{transform:scale(7);opacity:0}}
+nav a{position:relative;z-index:1}nav a.on{background:transparent;color:#fff}
+#ni{position:absolute;z-index:0;background:var(--red);border-radius:99px;transition:left .45s cubic-bezier(.3,1.3,.5,1),width .45s cubic-bezier(.3,1.3,.5,1);box-shadow:0 4px 14px rgba(215,25,32,.35)}
+.cases .card{background-image:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(215,25,32,.10),transparent 60%)}
+#pres.circ{animation:circ .7s cubic-bezier(.6,0,.2,1) both}@keyframes circ{from{clip-path:circle(0 at var(--cx) var(--cy))}to{clip-path:circle(150% at var(--cx) var(--cy))}}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:12px 0;font-variant-numeric:tabular-nums}th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}th{color:var(--mut);font-weight:500}
+.rep{display:none}.qo{display:block;width:100%;text-align:left;margin:8px 0}.qo.ok{border-color:var(--grn);background:rgba(16,185,129,.14)}.qo.no{border-color:var(--red);background:rgba(215,25,32,.10)}
+.qb{height:6px;background:var(--bg2);border-radius:9px;overflow:hidden;margin-bottom:12px}.qb i{display:block;height:100%;background:var(--red);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+#tmd{height:300px;background:var(--bg2)}.safe{color:var(--grn)}.bad{color:var(--red)}
+@media print{header,nav,section:not(#data),footer,#pres,#cg,#sp,#wipe,.btns,textarea{display:none!important}#data{padding:0}.rep{display:block}body{background:#fff;color:#000}}
+#lb,#pov,#phelp{position:fixed;inset:0;z-index:210;background:rgba(10,12,18,.88);display:none;backdrop-filter:blur(6px)}#lb.on,#pov.on,#phelp.on{display:flex}
+#lb{flex-direction:column}#lbs{flex:1;overflow:hidden;display:grid;place-items:center;touch-action:none;cursor:grab}#lbi{width:min(92vw,1100px);transform-origin:center}#lbi svg{width:100%;height:auto;background:var(--bg);border-radius:12px}
+#lbt{display:flex;gap:8px;justify-content:center;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px))}
+#pov{align-items:center;justify-content:center;padding:6vh 6vw}#pov .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;width:100%;max-height:88vh;overflow:auto}#pov button{text-align:left;padding:16px;min-height:90px;white-space:normal}#pov button.cur{border-color:var(--red);box-shadow:0 0 0 2px var(--red)}
+#phelp .card{margin:auto;max-width:460px}
+#pblk{position:fixed;inset:0;z-index:120;background:#000;display:none}#pblk.on{display:block}
+#up{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;width:44px;height:44px;border-radius:50%;padding:0;opacity:0;transform:translateY(16px);pointer-events:none;transition:.3s}#up.on{opacity:1;transform:none;pointer-events:auto}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.dg svg{width:100%;height:auto;background:var(--bg2);border-radius:10px;cursor:zoom-in;transition:transform .3s}.dg .card:hover svg{transform:scale(1.02)}
+.dg text,#lbi text{fill:var(--ink);font:12px 'Be Vietnam Pro',sans-serif}.dg .l,#lbi .l{stroke:var(--ink);fill:none;stroke-width:2}.nf .fv{display:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}#tv{height:min(52vh,420px);background:var(--bg2)}#vf{width:100%;height:min(52vh,420px);border:0;border-radius:10px;display:none}
+nav{align-items:center;scrollbar-width:none;-webkit-overflow-scrolling:touch}nav::-webkit-scrollbar{display:none}nav a,nav button{flex:none;white-space:nowrap}nav button{min-width:40px;line-height:1.5;padding:6px 12px}
+#pbody{overflow:auto;min-height:0}#pv{touch-action:none}
+@media(max-width:820px){#pres{padding:calc(2vh + env(safe-area-inset-top,0px)) 4vw calc(1vh + env(safe-area-inset-bottom,0px))}#pbody{align-content:start;gap:10px}#pbody h2{font-size:clamp(26px,8vw,40px)}#pbody ul{font-size:15px}#pbody li{margin:.2em 0}#pv{height:32vh}#pnote{font-size:13px}
+#pbot{flex-wrap:nowrap;gap:4px}#pbot .btns{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;padding:4px 0}#pbot .btns::-webkit-scrollbar{display:none}#pbot button{flex:none;padding:8px 12px;font-size:13px;white-space:nowrap}#pbot small{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style></head><body>
+<header class="hero"><canvas id="wave"></canvas>
+<h1 id="ttl">Con lắc Barton</h1>
+<p>Kéo con lắc phát động, chọn độ dài và xem con lắc cùng tần số bứt phá biên độ. Cộng hưởng, nhìn thấy được.</p>
+<div class="by">Đề án nghiên cứu: Lê Hoàng Hải · mô phỏng RK4 chạy trực tiếp trên trình duyệt</div><div class="btns" style="position:relative;margin-top:18px"><button class="p" id="hCta">▶ Bắt đầu trình chiếu (P)</button><button id="hLab">Vào phòng thí nghiệm</button></div></header>
+<nav id="nav"><a href="#lab">Phòng thí nghiệm</a><a href="#phase">Pha</a><a href="#theory">Công thức</a><a href="#cases">Ca thực tế</a><a href="#theater">Video</a><a href="#gallery">Sơ đồ</a><a href="#data">Số liệu</a><a href="#quiz">Quiz</a><a href="#game">TMD</a><a href="#ai">Trợ lý</a><button class="p" id="bPres" style="margin-left:auto;padding:6px 14px">▶ Trình chiếu</button><button id="bHelp" aria-label="Phím tắt" style="padding:6px 12px">?</button><button id="bTheme" aria-label="Đổi giao diện sáng tối" style="padding:6px 12px">◐</button></nav>
+
+<section id="lab"><h2>Phòng thí nghiệm ảo</h2>
+<p class="sub">Con lắc D (đỏ) kéo dây treo. Năm con lắc phụ có độ dài khác nhau; con lắc có L = L<sub>D</sub> sẽ cộng hưởng sau giai đoạn phách ban đầu.</p>
+<div class="lab"><div class="card"><canvas id="stage"></canvas>
+<div class="kpi"><div><small>Tần số riêng f₀ (D)</small><b id="kf">–</b></div><div><small>Biên độ cực đại</small><b id="ka">–</b></div><div><small>Hệ số phẩm chất Q</small><b id="kq">–</b></div><div><small>Lệch pha φ</small><b id="kp">–</b></div></div></div>
+<div class="card ctl">
+<label>Chiều dài L<sub>D</sub> <output id="oLD">0.50 m</output></label><input id="LD" type="range" min="0.25" max="1" step="0.01" value="0.5">
+<label>Hệ số tắt dần γ <output id="oG">0.35 s⁻¹</output></label><input id="G" type="range" min="0.05" max="2" step="0.01" value="0.35">
+<label>Biên độ lực kéo <output id="oF">1.0</output></label><input id="F" type="range" min="0.2" max="2" step="0.1" value="1">
+<label>Con lắc phụ đang chọn <output id="oSel">P3</output></label><input id="L" type="range" min="0.2" max="1" step="0.01" value="0.5">
+<label>Hệ B: cản gấp <output id="oB">4×</output></label><input id="rB" type="range" min="1.5" max="10" step=".5" value="4">
+<div class="btns"><button class="p" id="bRun">Tạm dừng</button><button id="bReset">Đặt lại</button><button id="bTrail">Vệt quỹ đạo: bật</button><button id="bSnd">Âm thanh: tắt</button></div>
+<small style="color:var(--mut)">Bấm vào con lắc phụ trên màn hình để chỉnh L. Kéo con lắc D bằng chuột hoặc ngón tay.</small></div></div>
+<div class="charts"><div class="card"><h4>Li độ x(t) – thấy rõ giai đoạn phách</h4><canvas id="c1"></canvas></div><div class="card"><h4>Đường cộng hưởng A(f) – Hệ A (Q cao) và Hệ B (Q thấp)</h4><canvas id="c2"></canvas></div><div class="card"><h4>Lệch pha φ(f), mốc π/2 tại f₀</h4><canvas id="c3"></canvas></div><div class="card"><h4>Công suất trung bình P(f) = ½bω²A²</h4><canvas id="c4"></canvas></div></div></section>
+
+<section id="phase"><div class="scrolly" id="scr"><div class="pin"><h2>Cuộn để xoay pha Δφ</h2><p class="sub">Cuộn trang: Δφ chạy từ 0 đến π/2 đến π. Tại π/2, lực đồng pha với vận tốc và bơm năng lượng tốt nhất.</p>
+<div class="card"><canvas id="ph" style="height:300px"></canvas><div class="kpi"><div><small>Δφ</small><b id="pd">0°</b></div><div><small>Công suất tức thời ⟨P⟩</small><b id="pp">0</b></div><div><small>Vùng</small><b id="pz">ω ≪ ω₀</b></div><div><small>Trạng thái</small><b id="ps">–</b></div></div></div></div></div></section>
+
+<section id="theory"><h2>Cơ sở vật lý</h2><p class="sub">Hệ dao động cưỡng bức có cản nhớt và các đại lượng xác lập. Phân biệt rõ ω₀ (riêng), ω (cưỡng bức) và ω<sub>r</sub> (đỉnh biên độ).</p>
+<div class="f"><i>m</i>ẍ + <i>b</i>ẋ + <i>kx</i> = <i>F</i>₀ cos(<i>ωt</i>)</div>
+<div class="f"><i>A</i>(ω) = <span class="fr"><span>F₀/m</span><span>√((ω₀² − ω²)² + 4γ²ω²)</span></span></div>
+<div class="f">φ = atan2(2γω, ω₀² − ω²) &nbsp; · &nbsp; ω<sub>r</sub> = √(ω₀² − 2γ²) (khi ω₀² &gt; 2γ²)</div>
+<div class="f">⟨P<sub>vào</sub>⟩ = ⟨P<sub>cản</sub>⟩ = ½ <i>b</i> ω² A²</div></section>
+
+<section id="cases"><h2>Ca thực tế: ba hiện tượng hay bị hiểu nhầm</h2><p class="sub">Không phải trường hợp nào cũng là cộng hưởng cưỡng bức tuyến tính.</p>
+<div class="cases">
+<div class="card"><span class="tag">1940</span><h3>Cầu Tacoma Narrows</h3><p>Mất ổn định xoắn khí đàn hồi tự kích thích (flutter), liên quan xoáy Von Kármán, không chỉ là cộng hưởng với gió.</p></div>
+<div class="card"><span class="tag">2000</span><h3>Cầu Millennium, London</h3><p>Kích thích ngang đồng bộ: người đi bộ chỉnh bước theo dao động cầu, phản hồi làm cầu lắc mạnh hơn.</p></div>
+<div class="card"><span class="tag">Taipei 101</span><h3>Quả cầu giảm chấn TMD 660 tấn</h3><p>Dao động ngược pha với tòa nhà, hút năng lượng từ gió bão và giảm biên độ rung.</p></div></div></section>
+
+<section id="theater"><h2>Phòng chiếu</h2><p class="sub">Xem bản tái tạo hoạt họa (chạy không cần mạng) hoặc dán link YouTube để xem video thật.</p><div class="card"><div class="tabs" id="tt"></div><div><canvas id="tv"></canvas><iframe id="vf" title="Video" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div><div class="btns" style="margin-top:10px"><input id="vu" placeholder="Dán link YouTube..." aria-label="Link YouTube" style="flex:1;min-width:200px;font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><button class="p" id="vgo">Phát video</button><button id="vsim">Bản mô phỏng</button><a id="vyt" target="_blank" rel="noopener" style="align-self:center;color:var(--red)">Tìm video trên YouTube</a></div><small id="vn" style="color:var(--mut)"></small></div></section>
+<section id="gallery"><h2>Thư viện sơ đồ kỹ thuật</h2><p class="sub">Bấm vào sơ đồ để phóng to, cuộn hoặc véo để zoom, kéo để di chuyển.</p><label style="display:inline-flex;gap:8px;margin-bottom:12px"><input type="checkbox" id="gFv" checked> Hiện vectơ lực</label>
+<div class="dg" id="dg">
+<div class="card"><svg viewBox="0 0 400 260" role="img" aria-label="Cấu tạo hệ Barton"><defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0L8,4L0,8z" fill="context-stroke"/></marker></defs><line class="l" x1="20" y1="30" x2="380" y2="30"/><line class="l" x1="70" y1="30" x2="100" y2="168"/><circle cx="100" cy="168" r="13" fill="#d71920"/><text x="96" y="205">D</text>
+<g class="l"><line x1="160" y1="30" x2="160" y2="120"/><line x1="200" y1="30" x2="200" y2="145"/><line x1="240" y1="30" x2="240" y2="168" stroke="#f59e0b"/><line x1="280" y1="30" x2="280" y2="190"/><line x1="320" y1="30" x2="320" y2="215"/></g><g fill="#2563eb"><path d="M160 112l-9 14h18z"/><path d="M200 137l-9 14h18z"/><path d="M280 182l-9 14h18z"/><path d="M320 207l-9 14h18z"/></g><path d="M240 160l-9 14h18z" fill="#f59e0b"/><text x="232" y="205">P3</text><text x="150" y="150">P1</text>
+<g class="fv"><path d="M112 20H190" stroke="#d71920" stroke-width="3" marker-end="url(#ah)"/><text x="120" y="14" fill="#d71920">lực kéo F qua dây</text></g><text x="20" y="250">P3 có L = L_D: cộng hưởng</text></svg><h3>Cấu tạo hệ Barton</h3></div>
+<div class="card"><svg viewBox="0 0 400 190" role="img" aria-label="Giản đồ pha"><defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0L8,4L0,8z" fill="context-stroke"/></marker></defs><g class="l"><circle cx="70" cy="80" r="48"/><circle cx="200" cy="80" r="48"/><circle cx="330" cy="80" r="48"/></g>
+<g stroke="#2563eb" stroke-width="3" marker-end="url(#ah)"><line x1="70" y1="80" x2="108" y2="80"/><line x1="200" y1="80" x2="238" y2="80"/><line x1="330" y1="80" x2="292" y2="80"/></g>
+<g class="fv" stroke="#d71920" stroke-width="3" marker-end="url(#ah)"><line x1="70" y1="84" x2="118" y2="84"/><line x1="200" y1="80" x2="200" y2="36"/><line x1="330" y1="80" x2="370" y2="80"/></g>
+<text x="30" y="155">ω ≪ ω₀: φ ≈ 0</text><text x="158" y="155">ω = ω₀: φ = π/2</text><text x="282" y="155">ω ≫ ω₀: φ ≈ π</text><text x="20" y="180">Xanh: li độ x. Đỏ: lực F.</text></svg><h3>Giản đồ vector ở ba miền tần số</h3></div>
+<div class="card"><svg viewBox="0 0 400 260" role="img" aria-label="Bộ giảm chấn TMD"><defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0L8,4L0,8z" fill="context-stroke"/></marker></defs><path class="l" d="M150 240L250 240L232 30L168 30Z"/><line class="l" x1="200" y1="30" x2="190" y2="110" stroke="#d71920"/><circle cx="190" cy="118" r="15" fill="#f59e0b"/><text x="264" y="125">TMD 660 tấn</text>
+<g stroke="#2563eb" stroke-width="3" marker-end="url(#ah)"><line x1="236" y1="22" x2="310" y2="22"/></g><text x="262" y="16" fill="#2563eb">tòa nhà →</text><g stroke="#f59e0b" stroke-width="3" marker-end="url(#ah)"><line x1="170" y1="150" x2="100" y2="150"/></g><text x="60" y="170">← TMD ngược pha</text>
+<g class="fv" stroke="#d71920" stroke-width="3" marker-end="url(#ah)"><line x1="20" y1="60" x2="90" y2="60"/><line x1="20" y1="90" x2="90" y2="90"/></g><text x="20" y="50" fill="#d71920">gió</text></svg><h3>Nguyên lý bộ giảm chấn TMD</h3></div></div></section>
+<div id="lb"><div id="lbs"><div id="lbi"></div></div><div id="lbt"><button id="lz1">＋</button><button id="lz2">－</button><button id="lz3">Đặt lại</button><button class="p" id="lz4">Đóng (Esc)</button></div></div><div id="pov"></div><div id="pblk"></div>
+<div id="phelp"><div class="card"><h3 style="margin:0 0 8px">Phím tắt</h3><p style="font-size:14px;line-height:1.9"><b>P</b> bắt đầu trình chiếu · <b>← → Space</b> chuyển slide · <b>1–8</b> nhảy slide · <b>Home/End</b><br><b>G</b> tổng quan · <b>B</b> màn đen · <b>F</b> toàn màn hình · <b>A</b> tự chạy 12 giây<br><b>L</b> laser · <b>D</b> bút · <b>C</b> xóa nét · <b>S</b> đèn rọi · <b>N</b> ghi chú · <b>Esc</b> thoát · <b>?</b> bảng này<br>Bấm đồng hồ trong slide để đổi mốc đếm ngược. Trên điện thoại, vuốt ngang để đổi slide.</p><button class="p" id="hx">Đóng</button></div></div><button id="up" aria-label="Lên đầu trang">↑</button>
+<section id="data"><h2>Trung tâm số liệu</h2><p class="sub">Ghi biên độ đo được của con lắc phụ đang chọn, so với biên độ lý thuyết xác lập. Đợi vài giây sau khi đổi thông số rồi mới ghi.</p><div class="card"><div class="rep"><h3>Báo cáo thực nghiệm: Con lắc Barton</h3><p>Tác giả: Lê Hoàng Hải · <span id="rd"></span></p></div>
+<div class="btns"><button class="p" id="dRec">Ghi lần đo</button><button id="dClr">Xóa hết</button><button id="dCsv">Xuất CSV</button><button id="dPrt">In báo cáo</button></div>
+<div style="overflow-x:auto"><table id="dt"></table></div><div class="kpi"><div><small>Số lần đo</small><b id="dn">0</b></div><div><small>A đo trung bình</small><b id="dm">–</b></div><div><small>Sai số tuyệt đối TB</small><b id="de">–</b></div><div><small>Sai số tương đối TB</small><b id="dr">–</b></div></div>
+<textarea id="dCsvT" hidden rows=6 style="width:100%;margin-top:10px" readonly></textarea></div></section>
+<section id="quiz"><h2>Kiểm tra kiến thức</h2><p class="sub">10 câu, có giải thích sau mỗi câu.</p><div class="card" id="qz"></div></section>
+<section id="game"><h2>Kỹ sư chống bão TMD</h2><p class="sub">Gió quét qua tần số riêng của tòa nhà. Chỉnh khối lượng và độ cản của quả cầu để giữ biên độ dưới ngưỡng đỏ.</p><div class="lab"><div class="card"><canvas id="tmd"></canvas></div><div class="card ctl"><label>Khối lượng TMD <output id="oMu">6%</output></label><input id="mu" type="range" min="1" max="15" step="1" value="6"><label>Độ cản TMD ζ <output id="oZ">10%</output></label><input id="zt" type="range" min="0" max="30" step="1" value="10"><div class="btns"><button id="tOn" class="p">TMD: bật</button><button id="tRs">Chơi lại</button></div><div class="kpi"><div><small>Biên độ tòa nhà</small><b id="tA">0</b></div><div><small>An toàn</small><b id="tS">0%</b></div></div><small id="tM" style="color:var(--mut)"></small></div></div></section>
+<section id="ai"><h2>Trợ lý vật lý (offline)</h2><p class="sub">Trả lời dựa trên trạng thái phòng thí nghiệm hiện tại. Thử: "tại sao biên độ cực đại", "Q là gì", "phân tích".</p>
+<div class="card chat"><div class="log" id="log"></div><form id="cf"><input id="ci" placeholder="Hỏi về cộng hưởng, pha, Q, TMD…" aria-label="Câu hỏi"><button class="p">Gửi</button></form></div></section>
+<div id="wipe"><span></span></div><div id="sp"></div><div id="cg"></div>
+<div id="pres" hidden><div id="pbar"></div><canvas id="ppen"></canvas><div id="pspot"></div><div id="plas"></div>
+<div id="ptop"><span id="pcnt"></span><span id="ptim">00:00</span></div>
+<div id="pbody"></div><div id="pnote" hidden></div>
+<div id="pbot"><div class="btns"><button id="pPrev">Trước</button><button class="p" id="pNext">Tiếp</button><button id="pL">Laser (L)</button><button id="pD">Bút (D)</button><button id="pS">Rọi (S)</button><button id="pN">Ghi chú (N)</button><button id="pX">Thoát (Esc)</button></div><small>← → Space chuyển slide · C xóa nét vẽ</small></div></div>
+<footer>BartonLab Pro · Lê Hoàng Hải. Bản gọn một trang; không cần mạng ngoài phông chữ.</footer>
+
+<script>
+const $=id=>document.getElementById(id),TAU=Math.PI*2,g=9.81;
+const dark=()=>matchMedia('(prefers-color-scheme:dark)').matches&&document.documentElement.dataset.theme!=='light';
+function fit(c){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return[x,r.width,r.height]}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+/* --- presentation studio --- */
+const SL=[
+{t:'Con lắc Barton và cộng hưởng cơ học',b:['Vì sao một con lắc trong nhóm tự dưng lắc mạnh nhất?','Đề án: Lê Hoàng Hải'],n:'Mở đầu bằng hình ảnh: sáu con lắc, một con "bứt phá". Hỏi hội đồng đoán con nào.'},
+{t:'Dao động cưỡng bức có cản',b:['mẍ + bẋ + kx = F₀cos(ωt)','ω₀ = √(k/m), γ = b/(2m)','Xác lập: A(ω) = (F₀/m) / √((ω₀²−ω²)² + 4γ²ω²)'],n:'Nhấn mạnh phân biệt ω₀, ω và ω_r.'},
+{t:'Đường cộng hưởng (số liệu sống)',b:['Đường đỏ: Q cao, đỉnh nhọn','Đường xanh: cản gấp 4, đỉnh tù','Kéo thanh γ ở phòng lab rồi quay lại: đường đổi theo'],n:'Đồ thị này lấy trực tiếp γ và L_D hiện tại của phòng thí nghiệm.',v:1},
+{t:'Pha π/2 và công suất',b:['φ = atan2(2γω, ω₀²−ω²)','Tại ω = ω₀: φ = π/2, lực đồng pha với vận tốc','⟨P_vào⟩ = ⟨P_cản⟩ = ½bω²A²'],n:'P(t)=F·v không âm, hệ liên tục được bơm năng lượng.'},
+{t:'Thí nghiệm Barton',b:['Con lắc D kéo dây, năm con lắc phụ có độ dài khác nhau','Mười giây đầu: hiện tượng phách','Sau đó con lắc L = L_D bứt phá biên độ'],n:'Chuyển sang phòng lab, kéo D bằng tay để minh họa.'},
+{t:'Ba ca thực tế',b:['Tacoma Narrows 1940: flutter xoắn khí đàn hồi, không chỉ cộng hưởng','Millennium 2000: kích thích ngang đồng bộ','Taipei 101: TMD 660 tấn dao động ngược pha'],n:'Chủ động đính chính hiểu lầm Tacoma.'},
+{t:'Kết luận',b:['Cộng hưởng xảy ra khi tần số cưỡng bức gần ω₀','Q cao: đỉnh nhọn, nguy hiểm hơn nhưng nhạy hơn','Giảm chấn (TMD) là lời giải kỹ thuật'],n:'Cảm ơn và mở phần hỏi đáp.'}];
+let si=0,pOn=false,pT0=0,pTi,laser=false,pen=false,spot=false,pdraw=false;
+function pshow(i){si=Math.max(0,Math.min(SL.length-1,i));const s=SL[si];
+ $('pbody').innerHTML='<h2>'+s.t+'</h2><ul>'+s.b.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+(s.v?'<canvas id="pv"></canvas>':'');
+ $('pnote').textContent=s.n;$('pcnt').textContent='Slide '+(si+1)+' / '+SL.length;$('pbar').style.width=(si+1)/SL.length*100+'%'}
+function pvz(){const c=$('pv');if(!c)return;const[x,w,h]=fit(c),wd=w0(S.LD),fm=wd/TAU*2,fs=[...Array(120)].map((_,i)=>i/120*fm+.001),A=gm=>fs.map(f=>[f,RM.A(TAU*f,wd,gm)]),mA=Math.max(...A(S.G).map(p=>p[1]))*1.05;
+ axes(x,w,h,'f (Hz)');line(x,A(S.G),'#d71920',w,h,fm,mA);line(x,A(S.G*4),'#2563eb',w,h,fm,mA)}
+function ploop(){if(!pOn)return;pvz();$('ptim').textContent=new Date(Date.now()-pT0).toISOString().slice(14,19);requestAnimationFrame(ploop)}
+function popen(){pOn=true;$('pres').hidden=false;const c=$('ppen');c.width=innerWidth;c.height=innerHeight;pT0=Date.now();pshow(0);try{$('pres').requestFullscreen()}catch(_){}ploop()}
+function pclose(){pOn=false;$('pres').hidden=true;try{document.fullscreenElement&&document.exitFullscreen()}catch(_){}}
+function tg(id,on){const e=$(id);e.classList.toggle('p',on)}
+function tLaser(){laser=!laser;$('plas').style.display=laser?'block':'none';tg('pL',laser)}
+function tPen(){pen=!pen;$('ppen').classList.toggle('on',pen);tg('pD',pen)}
+function tSpot(){spot=!spot;$('pspot').style.display=spot?'block':'none';tg('pS',spot)}
+function tNote(){const n=$('pnote');n.hidden=!n.hidden;tg('pN',!n.hidden)}
+$('bPres').onclick=popen;$('pX').onclick=pclose;$('pNext').onclick=()=>pshow(si+1);$('pPrev').onclick=()=>pshow(si-1);$('pL').onclick=tLaser;$('pD').onclick=tPen;$('pS').onclick=tSpot;$('pN').onclick=tNote;
+addEventListener('keydown',e=>{if(!pOn)return;const k=e.key.toLowerCase();
+ if(['arrowright',' ','pagedown'].includes(k)){e.preventDefault();pshow(si+1)}else if(['arrowleft','pageup'].includes(k)){e.preventDefault();pshow(si-1)}
+ else if(k==='escape')pclose();else if(k==='l')tLaser();else if(k==='d')tPen();else if(k==='s')tSpot();else if(k==='n')tNote();
+ else if(k==='c')$('ppen').getContext('2d').clearRect(0,0,9999,9999)});
+addEventListener('pointermove',e=>{if(!pOn)return;const l=$('plas');l.style.left=e.clientX+'px';l.style.top=e.clientY+'px';const sp=$('pspot');sp.style.setProperty('--sx',e.clientX+'px');sp.style.setProperty('--sy',e.clientY+'px');
+ if(pdraw){const x=$('ppen').getContext('2d');x.lineTo(e.clientX,e.clientY);x.strokeStyle='rgba(245,158,11,.6)';x.lineWidth=10;x.lineCap='round';x.lineJoin='round';x.stroke();x.beginPath();x.moveTo(e.clientX,e.clientY)}});
+$('ppen').onpointerdown=e=>{pdraw=true;const x=$('ppen').getContext('2d');x.beginPath();x.moveTo(e.clientX,e.clientY)};addEventListener('pointerup',()=>pdraw=false);
+/* --- presentation v2: animated scenes --- */
+const SL2=[
+{t:'Con lắc Barton',b:['Một con lắc D kéo dây, năm con lắc phụ dài ngắn khác nhau','Con nào sẽ lắc mạnh nhất?','Đề án: Lê Hoàng Hải'],cap:'Mô phỏng sống RK4 (offline)',n:'Hỏi hội đồng đoán con nào bứt phá. Con đổi màu vàng có cùng chiều dài với D.'},
+{t:'Dao động cưỡng bức',b:['mẍ + bẋ + kx = F₀cos(ωt)','ω₀ = √(k/m), γ = b/(2m)','Giai đoạn chuyển tiếp rồi ổn định'],cap:'Xanh: lực F(t). Đỏ: li độ x(t)',n:'Phân biệt ω₀, ω và ω_r.'},
+{t:'Đường cộng hưởng',b:['Đỏ: Q cao, đỉnh nhọn','Xanh: cản gấp 4, đỉnh tù','Chấm vàng quét tần số: đỉnh ở f₀'],cap:'Lấy γ và L_D từ phòng lab',n:'Quay lại lab kéo γ rồi xem đường đổi.'},
+{t:'Pha π/2 và công suất',b:['φ = atan2(2γω, ω₀²−ω²)','Tại ω₀: lực đồng pha với vận tốc','P(t) = F·v ≥ 0 bơm năng lượng liên tục'],cap:'Giản đồ vector quay và công suất',n:'Nhấn mạnh khi Δφ = 90° đường vàng hoàn toàn dương.'},
+{t:'Hiện tượng phách',b:['Mười giây đầu: biên độ lên xuống','Sau đó con lắc L = L_D bứt phá','Đồ thị là li độ con lắc đang chọn'],cap:'Li độ theo thời gian x(t)',n:'Chỉ vào đường đỏ phình dần.'},
+{t:'Ba ca thực tế',b:['Tacoma 1940: flutter xoắn, không chỉ cộng hưởng','Millennium 2000: kích thích ngang đồng bộ','Taipei 101: TMD dao động ngược pha'],cap:'Bản tái tạo hoạt họa, không cần mạng',n:'Đính chính hiểu lầm Tacoma.'},
+{t:'Kết luận',b:['Cộng hưởng: tần số cưỡng bức gần ω₀','Q cao: đỉnh nhọn, nhạy hơn','TMD là lời giải kỹ thuật'],cap:'Sóng lan từ con lắc D',n:'Cảm ơn, mở phần hỏi đáp.'}];
+function pend(x,px,py,L,a,col,r,glow){const bx=px+Math.sin(a)*L,by=py+Math.cos(a)*L;x.strokeStyle=css('--mut');x.lineWidth=2;x.beginPath();x.moveTo(px,py);x.lineTo(bx,by);x.stroke();x.save();if(glow){x.shadowColor='#d71920';x.shadowBlur=24}x.fillStyle=col;x.beginPath();x.arc(bx,by,r,0,TAU);x.fill();x.restore()}
+function phz(x,w,h,t,d,a){const cx=w*.26,cy=h*.5,R=Math.min(h*.36,w*.2);x.strokeStyle=css('--line');x.lineWidth=1;x.beginPath();x.arc(cx,cy,R,0,TAU);x.stroke();
+ [[a,'#2563eb',.85],[a+d,'#d71920',1]].forEach(([q,c,l])=>{const X=cx+Math.cos(q)*R*l,Y=cy-Math.sin(q)*R*l;x.strokeStyle=c;x.fillStyle=c;x.lineWidth=4;x.beginPath();x.moveTo(cx,cy);x.lineTo(X,Y);x.stroke();x.beginPath();x.arc(X,Y,6,0,TAU);x.fill()});
+ const ox=w*.55,ww=w*.4;x.strokeStyle=css('--line');x.beginPath();x.moveTo(ox,cy);x.lineTo(ox+ww,cy);x.stroke();x.beginPath();for(let i=0;i<=120;i++){const u=i/120*TAU*2+a,P=Math.sin(u+d)*Math.cos(u),X=ox+i/120*ww,Y=cy-P*R*.9;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.strokeStyle='#f59e0b';x.lineWidth=2.5;x.stroke();
+ x.fillStyle=css('--ink');x.font='600 18px Be Vietnam Pro';x.fillText('Δφ = '+Math.round(d*180/Math.PI)+'°',cx-30,cy+R+30);x.font='13px Be Vietnam Pro';x.fillStyle=css('--mut');x.fillText('P(t)',ox,cy-R-8)}
+const SC=[
+(x,w,h,t)=>{const y=h*.14;x.strokeStyle=css('--mut');x.lineWidth=3;x.beginPath();x.moveTo(w*.05,y);x.lineTo(w*.97,y);x.stroke();pend(x,w*.13,y,S.LD*h*.62,D.x,'#d71920',17,0);S.Ls.forEach((L,i)=>{const r=Math.abs(L-S.LD)<.03;pend(x,w*(.3+.14*i),y,L*h*.62,Math.max(-1.1,Math.min(1.1,P[i].x*3.2)),r?'#f59e0b':'#2563eb',12,r&&Math.abs(P[i].x)>.1)});x.fillStyle=css('--mut');x.font='13px Be Vietnam Pro';x.fillText('D',w*.13-4,h-14);S.Ls.forEach((L,i)=>x.fillText('P'+(i+1),w*(.3+.14*i)-8,h-14))},
+(x,w,h,t)=>{const T=t%10,am=1-Math.exp(-T/2.5),ph=t*2.4,y=h*.5+Math.sin(ph-Math.PI/2)*am*h*.2,sx=w*.17;x.strokeStyle=css('--mut');x.lineWidth=3;x.beginPath();x.moveTo(sx-40,24);x.lineTo(sx+40,24);x.stroke();x.beginPath();x.moveTo(sx,24);for(let i=1;i<=14;i++)x.lineTo(sx+(i%2?14:-14),24+(y-60-24)*i/14);x.lineTo(sx,y-30);x.lineWidth=2;x.stroke();x.fillStyle='#d71920';x.fillRect(sx-26,y-30,52,60);x.fillStyle='#2563eb';x.fillRect(sx+36,y-34+Math.sin(ph)*-0,6,0);
+ const ox=w*.4,ww=w*.56;[['#2563eb',0],['#d71920',-Math.PI/2]].forEach(([c,p])=>{x.beginPath();for(let i=0;i<=160;i++){const u=t-(160-i)*.03,a=p?(1-Math.exp(-(u%10+10)%10/2.5)):.9,v=Math.sin(2.4*u+p)*a,X=ox+i/160*ww,Y=h*.5-v*h*.22;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.strokeStyle=c;x.lineWidth=2.5;x.stroke()})},
+(x,w,h,t)=>{const wd=w0(S.LD),fm=wd/TAU*2,fs=[...Array(120)].map((_,i)=>i/120*fm+.001),A=g=>fs.map(f=>[f,RM.A(TAU*f,wd,g)]),mA=Math.max(...A(S.G).map(p=>p[1]))*1.1;axes(x,w,h,'f (Hz)');line(x,A(S.G),'#d71920',w,h,fm,mA);line(x,A(S.G*4),'#2563eb',w,h,fm,mA);const f=fm*(.5+.45*Math.sin(t*.7)),X=30+f/fm*(w-36),Y=h-18-RM.A(TAU*f,wd,S.G)/mA*(h-24);x.strokeStyle=css('--mut');x.setLineDash([4,4]);x.beginPath();x.moveTo(X,h-18);x.lineTo(X,Y);x.stroke();x.setLineDash([]);x.fillStyle='#f59e0b';x.beginPath();x.arc(X,Y,8+3*Math.sin(t*8),0,TAU);x.fill();x.fillStyle=css('--ink');x.font='13px Be Vietnam Pro';x.fillText('f = '+f.toFixed(2)+' Hz',Math.min(X+12,w-90),Math.max(Y-12,16))},
+(x,w,h,t)=>{const tri=(t*.25)%2;phz(x,w,h,t,(tri<1?tri:2-tri)*Math.PI,t*2)},
+(x,w,h,t)=>{axes(x,w,h,'t (s)');const R=S.rec;if(R.length>1){const mT=Math.max(20,S.t),mA=Math.max(.3,...R.map(r=>Math.abs(r[1])));x.beginPath();R.forEach((r,i)=>{const X=30+r[0]/mT*(w-36),Y=(h-12)/2-r[1]/mA*(h-30)/2;i?x.lineTo(X,Y):x.moveTo(X,Y)});x.strokeStyle='#d71920';x.lineWidth=2.5;x.stroke()}x.fillStyle=css('--mut');x.font='13px Be Vietnam Pro';x.fillText('P'+(S.sel+1),38,20)},
+(x,w,h,t)=>{const pw=w/3,ink=css('--ink'),mut=css('--mut');x.font='600 14px Be Vietnam Pro';x.lineWidth=3;
+ let cx=pw*.5,cy=h*.45,am=.45*Math.sin(t*2.2)*(.7+.3*Math.sin(t*.5));x.save();x.translate(cx,cy);x.rotate(am);x.strokeStyle='#d71920';x.lineWidth=8;x.beginPath();x.moveTo(-pw*.38,0);x.lineTo(pw*.38,0);x.stroke();x.restore();x.strokeStyle=mut;x.lineWidth=2;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx,h*.8);x.stroke();for(let i=0;i<3;i++){const yy=cy-30+i*30+((t*60)%30);x.strokeStyle='rgba(37,99,235,.5)';x.beginPath();x.moveTo(8,yy);x.lineTo(pw*.2,yy);x.stroke()}x.fillStyle=ink;x.fillText('Tacoma 1940',pw*.2,h-14);
+ cx=pw*1.5;const sw=18*Math.sin(t*1.8);x.strokeStyle='#d71920';x.lineWidth=7;x.beginPath();for(let i=0;i<=20;i++){const u=i/20,X=cx-pw*.38+u*pw*.76+sw*Math.sin(u*Math.PI),Y=h*.45;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();for(let i=0;i<9;i++){const u=((i/9+t*.05)%1),X=cx-pw*.38+u*pw*.76+sw*Math.sin(u*Math.PI);x.fillStyle=mut;x.beginPath();x.arc(X,h*.45-12-Math.abs(Math.sin(t*5+i))*4,4,0,TAU);x.fill()}x.fillStyle=ink;x.fillText('Millennium 2000',pw*1.2,h-14);
+ cx=pw*2.5;const s=16*Math.sin(t*1.5);x.fillStyle=mut;x.beginPath();x.moveTo(cx-24,h*.78);x.lineTo(cx+24,h*.78);x.lineTo(cx+12+s,h*.12);x.lineTo(cx-12+s,h*.12);x.closePath();x.fill();x.strokeStyle='#d71920';x.lineWidth=2;x.beginPath();x.moveTo(cx+s,h*.12);x.lineTo(cx+s-s*3.2,h*.3);x.stroke();x.fillStyle='#f59e0b';x.beginPath();x.arc(cx+s-s*3.2,h*.3,13,0,TAU);x.fill();x.fillStyle=ink;x.fillText('Taipei 101 TMD',pw*2.2,h-14)},
+(x,w,h,t)=>{const cx=w*.5,cy=h*.5,R=Math.min(w,h)*.45;for(let k=0;k<5;k++){const f=((t*.35+k/5)%1);x.strokeStyle='rgba(215,25,32,'+(1-f)*.7+')';x.lineWidth=3;x.beginPath();x.arc(cx,cy,f*R,0,TAU);x.stroke()}x.fillStyle='#d71920';x.beginPath();x.arc(cx,cy,26+4*Math.sin(t*6),0,TAU);x.fill();x.fillStyle=css('--ink');x.textAlign='center';x.font='800 34px Fraunces,serif';x.fillText('Q = '+(w0(S.LD)/(2*S.G)).toFixed(1),cx,cy+R*.95);x.textAlign='left'}];
+function pshow(i){const n=Math.max(0,Math.min(SL2.length-1,i)),dir=n>=si?1:-1;si=n;const s=SL2[si],b=$('pbody');b.style.setProperty('--dir',dir);b.classList.remove('go');void b.offsetWidth;
+ b.innerHTML='<div class="pl"><h2>'+s.t+'</h2><ul>'+s.b.map(q=>'<li>'+q+'</li>').join('')+'</ul></div><div class="vw"><canvas id="pv"></canvas><div class="cap">'+s.cap+'</div></div>';b.classList.add('go');
+ $('pnote').textContent=s.n;$('pcnt').textContent='Slide '+(si+1)+' / '+SL2.length;$('pbar').style.width=(si+1)/SL2.length*100+'%'}
+function ploop(){if(!pOn)return;const c=$('pv');if(c){const[x,w,h]=fit(c);SC[si](x,w,h,performance.now()/1000)}$('ptim').textContent=new Date(Date.now()-pT0).toISOString().slice(14,19);requestAnimationFrame(ploop)}
+/* --- hero waves --- */
+const wv=$('wave');let mx=.5,hov=0;addEventListener('pointermove',e=>mx=e.clientX/innerWidth);
+$('ttl').onpointerenter=()=>hov=1;$('ttl').onpointerleave=()=>hov=0;
+let amp=0;
+function wave(t){const[x,w,h]=fit(wv);x.clearRect(0,0,w,h);amp+=((hov?1:.35)-amp)*.05;
+ for(let k=0;k<5;k++){x.beginPath();for(let i=0;i<=w;i+=6){const y=h*.35+k*14+Math.sin(i/(90+k*25)+t/900*(1+k*.2)+mx*6)*(14+amp*26)*(1-k*.1);i?x.lineTo(i,y):x.moveTo(i,y)}
+ x.strokeStyle=k==0?'#d71920':'rgba(215,25,32,'+(.35-k*.06)+')';x.lineWidth=k==0?2.5:1.5;x.stroke()}}
+/* --- physics: 6 pendulums (D + 5) driven by a coupled string, RK4 --- */
+const S={LD:.5,G:.35,F:1,Ls:[.3,.4,.5,.6,.75],sel:2,run:true,trail:true,snd:false,t:0,drag:false,rec:[],mem:[]};
+const w0=L=>Math.sqrt(g/L);
+// state per pendulum: [x,v]; driver D is itself a free pendulum dragged by user; string couples via small k
+const D={x:.5,v:0},P=[0,1,2,3,4].map(()=>({x:0,v:0})),bn=[0,1,2,3,4].map(()=>[]);
+let drvPh=0;
+function reset(){D.x=.5;D.v=0;P.forEach(p=>{p.x=0;p.v=0});S.t=0;S.rec=[];bn.forEach(a=>a.length=0)}
+// driver force on P_i : F = kc*(xD - xi) via string; D has its own weak damping
+const kc=2.2;
+function deriv(s){ // s=[xD,vD,x1,v1..x5,v5]
+ const d=new Array(12),wd=w0(S.LD);
+ d[0]=s[1];d[1]=-wd*wd*s[0]-0.04*s[1]*0;
+ for(let i=0;i<5;i++){const x=s[2+2*i],v=s[3+2*i],w=w0(S.Ls[i]);
+  d[2+2*i]=v;d[3+2*i]=-w*w*x-2*S.G*v+kc*S.F*s[0]}
+ return d}
+function step(dt){
+ if(S.drag)return;
+ // keep D oscillating with steady amplitude (motor-like): reinject energy to hold amplitude
+ let s=[D.x,D.v];P.forEach(p=>s.push(p.x,p.v));
+ const add=(a,b,h)=>a.map((u,i)=>u+h*b[i]);
+ const k1=deriv(s),k2=deriv(add(s,k1,dt/2)),k3=deriv(add(s,k2,dt/2)),k4=deriv(add(s,k3,dt));
+ s=s.map((u,i)=>u+dt/6*(k1[i]+2*k2[i]+2*k3[i]+k4[i]));
+ D.x=s[0];D.v=s[1];P.forEach((p,i)=>{p.x=s[2+2*i];p.v=s[3+2*i]});S.t+=dt}
+/* --- stage --- */
+const st=$('stage');let cw=0,chh=0,sx,sh,peak=[0,0,0,0,0],audio=null,osc=null;
+const pivX=i=>cw*(.14+.72*(i+1)/6)-0,dPiv=()=>cw*.08;
+function geom(){return{y0:40,sc:chh*.6}}
+function draw(t){
+ const[x,w,h]=fit(st);cw=w;chh=h;const{y0,sc}=geom();x.clearRect(0,0,w,h);
+ const ink=css('--ink'),mut=css('--mut');
+ // string between D & pendulums (catenary-ish sag)
+ const stY=y0+10,dPx=dPiv()+D.x*60;
+ x.strokeStyle=mut;x.lineWidth=2;x.beginPath();x.moveTo(dPiv()-30,stY);x.lineTo(w-30,stY);x.stroke();
+ // pendulum D
+ const Lpx=S.LD*sc,dBx=dPiv()+Math.sin(D.x)*Lpx,dBy=stY+Math.cos(D.x)*Lpx;
+ x.strokeStyle=ink;x.lineWidth=2;x.beginPath();x.moveTo(dPiv(),stY);x.lineTo(dBx,dBy);x.stroke();
+ const res=Math.abs(S.Ls[0]-S.LD);
+ x.fillStyle='#d71920';x.beginPath();x.arc(dBx,dBy,15,0,TAU);x.fill();
+ x.fillStyle='#fff';x.font='600 12px Be Vietnam Pro';x.textAlign='center';x.fillText('D',dBx,dBy+4);
+ // trail for D
+ // pendulum P_i
+ let anyRes=false;
+ for(let i=0;i<5;i++){const px=pivX(i),Lp=S.Ls[i]*sc,ang=Math.max(-1.2,Math.min(1.2,P[i].x*3.2)),bx=px+Math.sin(ang)*Lp,by=stY+Math.cos(ang)*Lp;
+  const near=Math.abs(S.Ls[i]-S.LD)<.025&&Math.abs(P[i].x)>.15;if(near)anyRes=true;
+  peak[i]=Math.max(peak[i]*Math.exp(-dtF/8),Math.abs(P[i].x));
+  const tr=bn[i];tr.push([bx,by]);if(tr.length>40)tr.shift();
+  if(S.trail){x.beginPath();tr.forEach((q,j)=>j?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]));x.strokeStyle='rgba(37,99,235,.35)';x.lineWidth=2;x.stroke()}
+  x.strokeStyle=mut;x.lineWidth=1.5;x.beginPath();x.moveTo(px,stY);x.lineTo(bx,by);x.stroke();
+  x.save();if(near){x.shadowColor='#d71920';x.shadowBlur=22}
+  x.fillStyle=i===S.sel?'#d71920':(near?'#f59e0b':'#2563eb');x.beginPath();x.moveTo(bx,by-18);x.lineTo(bx-12,by+8);x.lineTo(bx+12,by+8);x.closePath();x.fill();x.restore();
+  x.fillStyle=mut;x.font='12px Be Vietnam Pro';x.fillText('P'+(i+1),bx,by+24)}
+ st.classList.toggle('glow',anyRes);
+ if(S.snd&&audio&&osc)osc.gain.gain.setTargetAtTime(anyRes?.05:0,audio.currentTime,.1);
+ x.fillStyle=mut;x.font='12px Be Vietnam Pro';x.textAlign='left';x.fillText('Cùng độ dài với D sẽ cộng hưởng',12,chh-12)}
+/* pointer */
+function pp(e){const r=st.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
+st.onpointerdown=e=>{const[px,py]=pp(e),{y0,sc}=geom();
+ const dBx=dPiv()+Math.sin(D.x)*S.LD*sc,dBy=y0+10+Math.cos(D.x)*S.LD*sc;
+ if(Math.hypot(px-dBx,py-dBy)<26){S.drag=true;st.setPointerCapture(e.pointerId);st.style.cursor='grabbing';return}
+ for(let i=0;i<5;i++){const bx=pivX(i),by=y0+10+S.Ls[i]*sc;if(Math.abs(px-bx)<28&&Math.abs(py-by)<60){S.sel=i;sync();return}}};
+st.onpointermove=e=>{if(!S.drag)return;const[px]=pp(e);D.x=Math.max(-1,Math.min(1,(px-dPiv())/(S.LD*geom().sc)));D.v=0};
+st.onpointerup=()=>{S.drag=false;st.style.cursor='grab'};
+/* controls */
+function sync(){$('oLD').textContent=S.LD.toFixed(2)+' m';$('oG').textContent=S.G.toFixed(2)+' s⁻¹';$('oF').textContent=S.F.toFixed(1);$('oSel').textContent='P'+(S.sel+1);$('L').value=S.Ls[S.sel];
+ const wd=w0(S.LD),Q=wd/(2*S.G);$('kf').textContent=(wd/TAU).toFixed(2)+' Hz';$('kq').textContent=Q.toFixed(1);}
+$('LD').oninput=e=>{S.LD=+e.target.value;sync()};$('G').oninput=e=>{S.G=+e.target.value;sync()};$('F').oninput=e=>{S.F=+e.target.value;sync()};
+$('L').oninput=e=>{S.Ls[S.sel]=+e.target.value;sync()};
+$('bRun').onclick=e=>{S.run=!S.run;e.target.textContent=S.run?'Tạm dừng':'Chạy tiếp'};
+$('bReset').onclick=reset;
+$('bTrail').onclick=e=>{S.trail=!S.trail;e.target.textContent='Vệt quỹ đạo: '+(S.trail?'bật':'tắt')};
+$('bSnd').onclick=e=>{S.snd=!S.snd;e.target.textContent='Âm thanh: '+(S.snd?'bật':'tắt');
+ if(S.snd&&!audio){try{audio=new (window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),gn=audio.createGain();gn.gain.value=0;o.frequency.value=330;o.connect(gn).connect(audio.destination);o.start();osc={o,gain:gn}}catch(_){S.snd=false}}};
+/* resonance math */
+const RM={A:(w,w0,gm)=>1/Math.sqrt((w0*w0-w*w)**2+4*gm*gm*w*w),ph:(w,w0,gm)=>Math.atan2(2*gm*w,w0*w0-w*w),Pw:(w,w0,gm)=>.5*(2*gm)*w*w*RM.A(w,w0,gm)**2};
+/* charts */
+function axes(x,w,h,c){x.strokeStyle=css('--line');x.lineWidth=1;x.beginPath();x.moveTo(30,6);x.lineTo(30,h-18);x.lineTo(w-6,h-18);x.stroke();x.fillStyle=css('--mut');x.font='11px Be Vietnam Pro';x.fillText(c,w-70,h-4)}
+function line(x,pts,col,w,h,mx,my,ox=30,oy=h-18){x.beginPath();pts.forEach((p,i)=>{const X=ox+p[0]/mx*(w-ox-6),Y=oy-p[1]/my*(oy-6);i?x.lineTo(X,Y):x.moveTo(X,Y)});x.strokeStyle=col;x.lineWidth=2;x.stroke()}
+function charts(){const wd=w0(S.Ls[S.sel]),fd=w0(S.LD)/TAU,fm=wd/TAU*2,N=160,gA=S.G,gB=S.G*rB;
+ let[x,w,h]=fit($('c1'));x.clearRect(0,0,w,h);axes(x,w,h,'t (s)');
+ const R=S.rec;if(R.length>1){const mxT=Math.max(20,S.t),mxA=Math.max(.3,...R.map(r=>Math.abs(r[1])));x.beginPath();R.forEach((r,i)=>{const X=30+r[0]/mxT*(w-36),Y=(h-18+6)/2+(r[1]/mxA)*-(h-30)/2;i?x.lineTo(X,Y):x.moveTo(X,Y)});x.strokeStyle='#d71920';x.lineWidth=1.6;x.stroke()}
+ const fs=[...Array(N)].map((_,i)=>i/N*fm*1.0+.001),A=g=>fs.map(f=>[f,RM.A(TAU*f,wd,g)]),mA=Math.max(...A(gA).map(p=>p[1]));
+ [x,w,h]=fit($('c2'));axes(x,w,h,'f (Hz)');line(x,A(gA),'#d71920',w,h,fm,mA*1.05);line(x,A(gB),'#2563eb',w,h,fm,mA*1.05);
+ x.fillStyle='#d71920';x.fillText('A',40,16);x.fillStyle='#2563eb';x.fillText('B',58,16);{const X=30+Math.min(1,fd/fm)*(w-36);x.setLineDash([4,4]);x.strokeStyle='#f59e0b';x.beginPath();x.moveTo(X,6);x.lineTo(X,h-18);x.stroke();x.setLineDash([]);x.fillStyle='#f59e0b';x.fillText('f_D',Math.min(X+4,w-30),16)}
+ [x,w,h]=fit($('c3'));axes(x,w,h,'f (Hz)');line(x,fs.map(f=>[f,RM.ph(TAU*f,wd,gA)]),'#2563eb',w,h,fm,Math.PI);
+ x.setLineDash([4,4]);x.strokeStyle='#f59e0b';x.beginPath();const yh=(h-18)-.5*(h-24);x.moveTo(30,yh);x.lineTo(w-6,yh);x.stroke();x.setLineDash([]);x.fillStyle='#f59e0b';x.fillText('π/2',34,yh-4);
+ [x,w,h]=fit($('c4'));axes(x,w,h,'f (Hz)');const Pm=Math.max(...fs.map(f=>RM.Pw(TAU*f,wd,gA)));line(x,fs.map(f=>[f,RM.Pw(TAU*f,wd,gA)]),'#f59e0b',w,h,fm,Pm*1.05)}
+/* scrolly phasor */
+function phasor(){const c=$('ph');const[x,w,h]=fit(c);x.clearRect(0,0,w,h);const sec=$('scr'),r=sec.getBoundingClientRect();let p=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight+100)));const d=p*Math.PI;
+ const cx=w*.28,cy=h/2,R=Math.min(h*.4,w*.2),t=performance.now()/700;
+ x.strokeStyle=css('--line');x.lineWidth=1;x.beginPath();x.arc(cx,cy,R,0,TAU);x.stroke();
+ const fa=t,va=t+d-Math.PI/2*0; // velocity = displacement + pi/2; drive lead = angle d relative
+ const vec=(a,c,l)=>{x.strokeStyle=c;x.fillStyle=c;x.lineWidth=3;x.beginPath();x.moveTo(cx,cy);const X=cx+Math.cos(a)*R*l,Y=cy-Math.sin(a)*R*l;x.lineTo(X,Y);x.stroke();x.beginPath();x.arc(X,Y,5,0,TAU);x.fill()};
+ vec(t,'#2563eb',.9);vec(t+d,'#d71920',1);
+ x.fillStyle=css('--mut');x.font='12px Be Vietnam Pro';x.fillText('Biên độ A (xanh)  ·  Lực F (đỏ)',cx-R,cy+R+22);
+ // power wave
+ const ox=w*.55,ww=w*.4;x.beginPath();let avg=0;for(let i=0;i<=120;i++){const u=i/120*TAU*2,v=Math.sin(u),F=Math.sin(u+d),P=F*(Math.cos(u));avg+=P/121;const X=ox+i/120*ww,Y=cy-P*R*.8;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.strokeStyle='#f59e0b';x.lineWidth=2;x.stroke();
+ x.strokeStyle=css('--line');x.beginPath();x.moveTo(ox,cy);x.lineTo(ox+ww,cy);x.stroke();
+ const deg=Math.round(d*180/Math.PI);$('pd').textContent=deg+'°';
+ const pw=Math.max(0,Math.sin(d))*.5;$('pp').textContent=(pw).toFixed(2)+' (max 0.50)';
+ $('pz').textContent=d<1.2?'ω ≪ ω₀':d<1.95?'ω ≈ ω₀':'ω ≫ ω₀';$('ps').textContent=Math.abs(d-Math.PI/2)<.12?'Cộng hưởng: F đồng pha v':'Chưa tối ưu'}
+/* ai */
+function ai(q){q=q.toLowerCase();const wd=w0(S.LD),Q=wd/(2*S.G);const st=`Hiện tại L_D = ${S.LD.toFixed(2)} m, f₀ = ${(wd/TAU).toFixed(2)} Hz, γ = ${S.G.toFixed(2)}, Q ≈ ${Q.toFixed(1)}.`;
+ if(/phân tích|số liệu|telemetry/.test(q))return st+(Q>5?' Q cao: đỉnh nhọn, cần chính xác tần số.':' Q thấp: đỉnh tù, ít nhạy hơn.')+' Đỉnh thực tế ω_r = '+(2*S.G*S.G<wd*wd?Math.sqrt(wd*wd-2*S.G*S.G).toFixed(2)+' rad/s.':'không tồn tại (cản quá lớn).');
+ if(/q |phẩm chất|^q$/.test(q+' '))return 'Q = ω₀/(2γ): cho biết đỉnh nhọn thế nào. '+st;
+ if(/pha|π\/2|pi/.test(q))return 'Tại ω = ω₀, φ = π/2. Lực đồng pha với vận tốc nên P(t) = F·v ≥ 0, luôn bơm năng lượng vào hệ.';
+ if(/tacoma/.test(q))return 'Tacoma Narrows 1940 là flutter xoắn khí đàn hồi tự kích thích, không đơn thuần cộng hưởng cưỡng bức.';
+ if(/tmd|taipei/.test(q))return 'TMD 660 tấn ở Taipei 101 dao động ngược pha với tòa nhà để hút năng lượng gió.';
+ if(/millennium/.test(q))return 'Cầu Millennium: kích thích ngang đồng bộ, người đi bộ chỉnh bước theo cầu rồi khuếch đại dao động.';
+ if(/cực đại|biên độ|vì sao|tại sao|cộng hưởng/.test(q))return 'Con lắc cùng độ dài với D có cùng ω₀ với tần số cưỡng bức, nên lệch pha π/2 và nhận công suất lớn nhất. Giảm γ để thấy đỉnh nhọn hơn. '+st;
+ return 'Mình chưa rõ ý. Hãy thử hỏi về biên độ cực đại, pha π/2, hệ số Q, TMD, Tacoma, hoặc gõ "phân tích".'}
+const log=$('log');function msg(t,u){const d=document.createElement('div');d.className='m'+(u?' u':'');d.textContent=t;log.appendChild(d);log.scrollTop=1e9}
+msg('Chào bạn! Hỏi mình về cộng hưởng, pha hoặc số liệu hiện tại.');
+$('cf').onsubmit=e=>{e.preventDefault();const v=$('ci').value.trim();if(!v)return;msg(v,1);$('ci').value='';setTimeout(()=>msg(ai(v)),300)};
+/* tilt */
+document.querySelectorAll('.cases .card').forEach(c=>{c.onpointermove=e=>{const r=c.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(600px) rotateY(${dx*10}deg) rotateX(${-dy*10}deg)`};c.onpointerleave=()=>c.style.transform=''});
+/* nav spy */
+const links=[...document.querySelectorAll('nav a')];addEventListener('scroll',()=>{let cur=links[0];links.forEach(a=>{const s=$(a.hash.slice(1));if(s.getBoundingClientRect().top<innerHeight*.4)cur=a});links.forEach(a=>a.classList.toggle('on',a===cur))});
+/* --- motion layer --- */
+const RED=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// hero letters
+(()=>{const t=$('ttl'),s=t.textContent;t.setAttribute('aria-label',s);t.textContent='';[...s].forEach((c,i)=>{if(c===' '){t.append(' ');return}const e=document.createElement('span');e.className='ch ld';e.textContent=c;e.setAttribute('aria-hidden','true');e.style.setProperty('--i',i);t.append(e)});setTimeout(()=>t.querySelectorAll('.ld').forEach(e=>e.classList.remove('ld')),1800)})();
+// nav indicator
+const nv=$('nav'),ni=document.createElement('i');ni.id='ni';nv.prepend(ni);
+function moveNi(){const a=nv.querySelector('a.on')||links[0];ni.style.left=a.offsetLeft+'px';ni.style.width=a.offsetWidth+'px';ni.style.top=a.offsetTop+'px';ni.style.height=a.offsetHeight+'px';nv.scrollTo({left:a.offsetLeft-24,behavior:RED?'auto':'smooth'})}
+addEventListener('scroll',moveNi,{passive:true});addEventListener('resize',moveNi);setTimeout(moveNi,300);
+// page-wipe transition on nav click
+let lock=false;links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const sec=$(a.hash.slice(1));if(!sec||lock)return;
+ const go=()=>scrollTo({top:sec.getBoundingClientRect().top+scrollY-52,behavior:'instant'});
+ if(RED){go();return}lock=true;const w=$('wipe');w.firstElementChild.textContent=a.textContent;w.className='';void w.offsetWidth;w.className='in';
+ setTimeout(()=>{go();w.className='out'},560);setTimeout(()=>{w.className='';lock=false},1200)}));
+// scroll progress + reveal
+const sp=$('sp');addEventListener('scroll',()=>{sp.style.transform='scaleX('+scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)+')'},{passive:true});
+if(!RED&&'IntersectionObserver' in window){const els=[...document.querySelectorAll('section:not(#phase) h2,section:not(#phase) .sub,.kpi,.charts .card,.cases .card,.f,.chat')];els.forEach((e,i)=>{e.classList.add('rv');e.style.setProperty('--d',(i%4)*90+'ms')});
+ const io=new IntersectionObserver(en=>en.forEach(q=>{if(q.isIntersecting){const e=q.target;e.classList.add('in');io.unobserve(e);setTimeout(()=>{e.classList.remove('rv','in');e.style.removeProperty('--d')},1400)}}),{threshold:.12});els.forEach(e=>io.observe(e))}
+// ripple + click ring
+addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('button');if(b){const r=b.getBoundingClientRect(),z=Math.max(r.width,r.height),s=document.createElement('span');s.className='rp';s.style.cssText='width:'+z+'px;height:'+z+'px;left:'+(e.clientX-r.left-z/2)+'px;top:'+(e.clientY-r.top-z/2)+'px';b.append(s);setTimeout(()=>s.remove(),650)}
+ if(RED)return;const k=document.createElement('div');k.className='ck';k.style.left=e.clientX+'px';k.style.top=e.clientY+'px';document.body.append(k);setTimeout(()=>k.remove(),650)});
+// cursor glow + card spotlight
+if(matchMedia('(pointer:fine)').matches&&!RED){const cg=$('cg');let gx=innerWidth/2,gy=innerHeight/2,tx=gx,ty=gy;addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY});(function f(){gx+=(tx-gx)*.12;gy+=(ty-gy)*.12;cg.style.transform='translate('+gx+'px,'+gy+'px)';requestAnimationFrame(f)})()}
+document.querySelectorAll('.cases .card').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}));
+// circular reveal for presentation
+$('bPres').onclick=e=>{const r=e.currentTarget.getBoundingClientRect(),p=$('pres');p.style.setProperty('--cx',r.left+r.width/2+'px');p.style.setProperty('--cy',r.top+r.height/2+'px');p.classList.remove('circ');void p.offsetWidth;popen();if(!RED){p.classList.add('circ');setTimeout(()=>p.classList.remove('circ'),900)}};
+/* --- data center, quiz, game --- */
+const DT=[];function f2(v,n=3){return Number(v).toFixed(n)}
+function theoA(){const wd=w0(S.LD),w=w0(S.Ls[S.sel]),k=kc*S.F;return k*.5/Math.sqrt((w*w-wd*wd)**2+4*S.G*S.G*wd*wd)}
+function dRender(){const t=$('dt');t.innerHTML='<tr><th>#</th><th>L_D (m)</th><th>L (m)</th><th>γ</th><th>A đo</th><th>A lý thuyết</th><th>|ΔA|</th><th>δ (%)</th></tr>'+DT.map((r,i)=>'<tr><td>'+(i+1)+'</td><td>'+f2(r.ld,2)+'</td><td>'+f2(r.l,2)+'</td><td>'+f2(r.g,2)+'</td><td>'+f2(r.m)+'</td><td>'+f2(r.t)+'</td><td>'+f2(Math.abs(r.m-r.t))+'</td><td>'+f2(Math.abs(r.m-r.t)/r.t*100,1)+'</td></tr>').join('');
+ const n=DT.length;$('dn').textContent=n;if(n){const m=DT.reduce((a,r)=>a+r.m,0)/n,e=DT.reduce((a,r)=>a+Math.abs(r.m-r.t),0)/n,d=DT.reduce((a,r)=>a+Math.abs(r.m-r.t)/r.t,0)/n*100;$('dm').textContent=f2(m);$('de').textContent=f2(e);$('dr').textContent=f2(d,1)+'%'}else{['dm','de','dr'].forEach(i=>$(i).textContent='–')}}
+$('dRec').onclick=()=>{DT.push({ld:S.LD,l:S.Ls[S.sel],g:S.G,m:peak[S.sel],t:theoA()});dRender()};
+$('dClr').onclick=()=>{DT.length=0;$('dCsvT').hidden=true;dRender()};
+$('dCsv').onclick=()=>{const c='lan,L_D,L,gamma,A_do,A_ly_thuyet,abs_err,rel_err_pct\n'+DT.map((r,i)=>[i+1,r.ld,r.l,r.g,r.m,r.t,Math.abs(r.m-r.t),Math.abs(r.m-r.t)/r.t*100].join(',')).join('\n');const a=$('dCsvT');a.value=c;a.hidden=false;a.select();try{navigator.clipboard.writeText(c)}catch(_){}};
+$('dPrt').onclick=()=>{$('rd').textContent=new Date().toLocaleDateString('vi-VN');try{window.print()}catch(_){}};dRender();
+const QZ=[
+{q:'Tần số góc riêng của hệ lò xo khối lượng là?',o:['√(k/m)','√(m/k)','k/m','2π√(m/k)'],a:0,e:'ω₀ = √(k/m). Đây là tần số góc; chu kỳ mới là 2π√(m/k).'},
+{q:'Biên độ xác lập lớn nhất khi nào (cản nhỏ)?',o:['ω ≈ ω₀','ω ≫ ω₀','ω ≪ ω₀','ω = 0'],a:0,e:'Cộng hưởng xảy ra khi tần số cưỡng bức gần tần số riêng.'},
+{q:'Tại ω = ω₀, độ lệch pha φ giữa li độ và lực là?',o:['0','π/2','π','π/4'],a:1,e:'φ = atan2(2γω, 0) = π/2: lực đồng pha với vận tốc.'},
+{q:'Giảm γ thì đỉnh cộng hưởng như thế nào?',o:['Nhọn hơn, Q lớn hơn','Tù hơn','Không đổi','Biến mất'],a:0,e:'Q = ω₀/(2γ). Cản nhỏ thì Q cao và đỉnh nhọn.'},
+{q:'Đỉnh biên độ thực tế ω_r = √(ω₀² − 2γ²) tồn tại khi?',o:['ω₀² > 2γ²','γ > ω₀','ω₀ = 0','Luôn luôn'],a:0,e:'Nếu cản quá lớn (ω₀² ≤ 2γ²) thì biên độ không có cực đại dương.'},
+{q:'Công suất trung bình ở trạng thái xác lập bằng?',o:['½·b·ω²·A²','b·ω·A','k·A²','F₀·A'],a:0,e:'⟨P_vào⟩ = ⟨P_cản⟩ = ½ b ω² A².'},
+{q:'Cách giải thích đúng về cầu Tacoma Narrows (1940)?',o:['Flutter xoắn khí đàn hồi tự kích thích','Cộng hưởng cưỡng bức đơn thuần','Động đất','Quá tải xe cộ'],a:0,e:'Đây là mất ổn định xoắn khí đàn hồi liên quan xoáy Von Kármán.'},
+{q:'Hiện tượng cầu Millennium (2000) là?',o:['Kích thích ngang đồng bộ','Flutter xoắn','Gió bão','Phao nổi'],a:0,e:'Người đi bộ chỉnh bước theo cầu, phản hồi làm dao động ngang lớn hơn.'},
+{q:'Quả cầu TMD 660 tấn ở Taipei 101 hoạt động ra sao?',o:['Dao động ngược pha với tòa nhà','Cùng pha với tòa nhà','Đứng yên','Tạo gió'],a:0,e:'Dao động ngược pha hấp thụ năng lượng gió và giảm biên độ.'},
+{q:'Trong hệ Barton, con lắc nào lắc mạnh nhất?',o:['Con có cùng chiều dài với con lắc phát động','Con dài nhất','Con ngắn nhất','Con nặng nhất'],a:0,e:'Cùng chiều dài thì cùng ω₀, nên cộng hưởng sau giai đoạn phách.'}];
+let qi=0,qs=0;const qz=$('qz');
+function qr(){if(qi>=QZ.length){qz.innerHTML='<h3 style="margin:0">Kết quả: '+qs+' / '+QZ.length+'</h3><p>'+(qs>=8?'Rất vững!':qs>=5?'Đã khá, xem lại các câu sai.':'Nên xem lại phần lý thuyết.')+'</p><button class="p" id="qAg">Làm lại</button>';$('qAg').onclick=()=>{qi=0;qs=0;qr()};return}
+ const Q=QZ[qi];qz.innerHTML='<div class="qb"><i style="width:'+qi/QZ.length*100+'%"></i></div><small>Câu '+(qi+1)+'/'+QZ.length+'</small><h3 style="margin:6px 0">'+Q.q+'</h3>'+Q.o.map((o,i)=>'<button class="qo" data-i="'+i+'">'+o+'</button>').join('')+'<div id="qx"></div>';
+ qz.querySelectorAll('.qo').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;qz.querySelectorAll('.qo').forEach(x=>x.disabled=true);qz.querySelectorAll('.qo')[Q.a].classList.add('ok');if(i===Q.a)qs++;else b.classList.add('no');
+ $('qx').innerHTML='<p>'+Q.e+'</p><div class="btns"><button class="p" id="qN">'+(qi==QZ.length-1?'Xem kết quả':'Câu tiếp')+'</button>'+(i!==Q.a?'<button id="qA">Hỏi trợ lý giải thích</button>':'')+'</div>';
+ $('qN').onclick=()=>{qi++;qr()};if($('qA'))$('qA').onclick=()=>{msg(Q.q,1);const r=ai(Q.q);msg(r.startsWith('Mình chưa rõ')?Q.e:r);$('ai').scrollIntoView({behavior:'smooth'})}})}
+qr();
+// TMD game
+const TG={x:[0,0,0,0],t:0,safe:0,tot:0,on:true,mu:.06,z:.1};const W1=2,Z1=.01,TH=1;
+function tD(s,t){const mu=TG.on?TG.mu:0,w2=W1/(1+mu),z2=TG.z,Om=W1*(1+.25*Math.sin(t*.2)),F=.12*Math.cos(Om*t);const rel=s[2]-s[0],relv=s[3]-s[1],f2=mu?mu*w2*w2*rel+2*z2*mu*w2*relv:0;
+ return[s[1],-W1*W1*s[0]-2*Z1*W1*s[1]+f2+F,s[3],mu?-w2*w2*rel-2*z2*w2*relv:0]}
+function tStep(dt){let s=TG.x,t=TG.t;const a=(p,q,h)=>p.map((u,i)=>u+h*q[i]),k1=tD(s,t),k2=tD(a(s,k1,dt/2),t+dt/2),k3=tD(a(s,k2,dt/2),t+dt/2),k4=tD(a(s,k3,dt),t+dt);TG.x=s.map((u,i)=>u+dt/6*(k1[i]+2*k2[i]+2*k3[i]+k4[i]));TG.t+=dt;TG.tot+=dt;if(Math.abs(TG.x[0])<TH)TG.safe+=dt}
+function tDraw(){const c=$('tmd'),[x,w,h]=fit(c),cx=w*.4,sc=h*.22,x1=TG.x[0]*sc*.7,ink=css('--ink'),mut=css('--mut');x.clearRect(0,0,w,h);
+ x.fillStyle='rgba(215,25,32,.10)';x.fillRect(cx-TH*sc*.7-30,0,12,h);x.fillRect(cx+TH*sc*.7+18,0,12,h);x.fillStyle=mut;x.beginPath();x.moveTo(cx-30,h-20);x.lineTo(cx+30,h-20);x.lineTo(cx+16+x1,28);x.lineTo(cx-16+x1,28);x.closePath();x.fill();
+ if(TG.on){const bx=cx+TG.x[2]*sc*.7;x.strokeStyle='#d71920';x.lineWidth=2;x.beginPath();x.moveTo(cx+x1,28);x.lineTo(bx,64);x.stroke();x.fillStyle='#f59e0b';x.beginPath();x.arc(bx,64,8+TG.mu*100,0,TAU);x.fill()}
+ x.fillStyle=css('--mut');x.font='12px Be Vietnam Pro';x.fillText('Gió →',10,24);for(let i=0;i<4;i++){const yy=40+i*26;x.fillStyle='rgba(37,99,235,.35)';x.fillRect(10+((TG.t*80+i*30)%60),yy,26,2)}
+ const a=Math.abs(TG.x[0]),over=a>=TH;$('tA').textContent=f2(a,2)+(over?' (vượt)':'');$('tA').className=over?'bad':'';const p=TG.tot?TG.safe/TG.tot*100:100;$('tS').textContent=p.toFixed(0)+'%';$('tS').className=p>=90?'safe':p<60?'bad':'';
+ $('tM').textContent='Gợi ý: TMD được dò tần số theo Den Hartog; khối lượng lớn giúp nhiều hơn, cản quá nhỏ hoặc quá lớn đều kém.'}
+$('mu').oninput=e=>{TG.mu=e.target.value/100;$('oMu').textContent=e.target.value+'%'};$('zt').oninput=e=>{TG.z=e.target.value/100;$('oZ').textContent=e.target.value+'%'};
+$('tOn').onclick=e=>{TG.on=!TG.on;e.target.textContent='TMD: '+(TG.on?'bật':'tắt')};$('tRs').onclick=()=>{TG.x=[0,0,0,0];TG.t=0;TG.safe=0;TG.tot=0};
+(function tl(){const r=$('tmd').getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){for(let i=0;i<8;i++)tStep(.01);tDraw()}requestAnimationFrame(tl)})();
+/* --- extras: theme, lightbox, presenter tools --- */
+$('bTheme').onclick=()=>{document.documentElement.dataset.theme=dark()?'light':'dark'};
+$('bHelp').onclick=()=>$('phelp').classList.toggle('on');$('hx').onclick=()=>$('phelp').classList.remove('on');$('phelp').onclick=e=>{if(e.target.id==='phelp')e.target.classList.remove('on')};
+$('hCta').onclick=()=>$('bPres').click();$('hLab').onclick=()=>links[0].click();
+const up=$('up');up.onclick=()=>scrollTo({top:0,behavior:RED?'auto':'smooth'});addEventListener('scroll',()=>up.classList.toggle('on',scrollY>700),{passive:true});
+$('gFv').onchange=e=>$('dg').classList.toggle('nf',!e.target.checked);
+let lz=1,lx=0,ly=0,ld=null;const lbA=()=>$('lbi').style.transform='translate('+lx+'px,'+ly+'px) scale('+lz+')';
+document.querySelectorAll('#dg svg').forEach(s=>s.onclick=()=>{const c=s.cloneNode(true);if($('dg').classList.contains('nf'))c.querySelectorAll('.fv').forEach(e=>e.style.display='none');$('lbi').replaceChildren(c);lz=1;lx=ly=0;lbA();$('lb').classList.add('on')});
+$('lz1').onclick=()=>{lz=Math.min(5,lz*1.3);lbA()};$('lz2').onclick=()=>{lz=Math.max(.5,lz/1.3);lbA()};$('lz3').onclick=()=>{lz=1;lx=ly=0;lbA()};$('lz4').onclick=()=>$('lb').classList.remove('on');
+$('lbs').addEventListener('wheel',e=>{e.preventDefault();lz=Math.max(.5,Math.min(5,lz*(e.deltaY<0?1.12:.89)));lbA()},{passive:false});
+$('lbs').onpointerdown=e=>{ld=[e.clientX-lx,e.clientY-ly];$('lbs').setPointerCapture(e.pointerId)};$('lbs').onpointermove=e=>{if(ld){lx=e.clientX-ld[0];ly=e.clientY-ld[1];lbA()}};$('lbs').onpointerup=()=>ld=null;
+const TM=[0,5,10,15,20,30];let tmI=2,auto=null,blk=false;
+function tmr(){const e=(Date.now()-pT0)/1000,el=$('ptim');if(!TM[tmI]){el.textContent=new Date(e*1000).toISOString().slice(14,19);el.style.color='';return}const r=TM[tmI]*60-e,a=Math.abs(r);el.textContent=(r<0?'+':'')+String(Math.floor(a/60)).padStart(2,'0')+':'+String(Math.floor(a%60)).padStart(2,'0');el.style.color=r<120?(r<60?'#d71920':'#f59e0b'):''}
+function ploop(){if(!pOn)return;const c=$('pv');if(c){const[x,w,h]=fit(c);SC[si](x,w,h,performance.now()/1000)}tmr();requestAnimationFrame(ploop)}
+$('ptim').style.cursor='pointer';$('ptim').title='Bấm để đổi giờ đếm ngược';$('ptim').onclick=()=>{tmI=(tmI+1)%TM.length};
+function ovT(){const o=$('pov');if(o.classList.toggle('on'))o.innerHTML='<div class="g">'+SL2.map((s,i)=>'<button class="'+(i==si?'cur':'')+'" data-i="'+i+'"><small>'+(i+1)+'</small><br><b>'+s.t+'</b></button>').join('')+'</div>',o.querySelectorAll('button').forEach(b=>b.onclick=()=>{pshow(+b.dataset.i);o.classList.remove('on')})}
+function tAuto(){if(auto){clearInterval(auto);auto=null}else auto=setInterval(()=>{if(!pOn||si>=SL2.length-1)tAuto();else pshow(si+1)},12000);tg('pA',!!auto)}
+function tBlk(){blk=!blk;$('pblk').classList.toggle('on',blk)}
+function fsT(){try{document.fullscreenElement?document.exitFullscreen():$('pres').requestFullscreen()}catch(_){}}
+[['pG','Tổng quan (G)',ovT],['pA','Tự chạy (A)',tAuto],['pB','Màn đen (B)',tBlk],['pF','Toàn màn hình (F)',fsT]].forEach(([id,t,f])=>{const b=document.createElement('button');b.id=id;b.textContent=t;b.onclick=f;$('pbot').querySelector('.btns').append(b)});
+let tx0=0;$('pres').addEventListener('touchstart',e=>tx0=e.touches[0].clientX,{passive:true});$('pres').addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx0;if(!pen&&Math.abs(d)>60)pshow(si+(d<0?1:-1))},{passive:true});
+addEventListener('keydown',e=>{if(/INPUT|TEXTAREA/.test(e.target.tagName))return;const k=e.key,l=k.toLowerCase(),on=['lb','pov','phelp'].some(i=>$(i).classList.contains('on'));
+ if(k==='Escape'&&(on||blk)){e.stopImmediatePropagation();['lb','pov','phelp'].forEach(i=>$(i).classList.remove('on'));blk=false;$('pblk').classList.remove('on');return}
+ if(k==='?'){$('phelp').classList.toggle('on');return}
+ if(!pOn){if(l==='p')$('bPres').click();return}
+ if(l==='g')ovT();else if(l==='b')tBlk();else if(l==='f')fsT();else if(l==='a')tAuto();else if(k==='Home')pshow(0);else if(k==='End')pshow(SL2.length-1);else if(/^[1-8]$/.test(k))pshow(+k-1)},true);
+/* --- upgrade v3: A/B, slide 8, theater, camera gestures --- */
+let rB=4,dtF=.016;$('rB').oninput=e=>{rB=+e.target.value;$('oB').textContent=rB+'×'};
+SL2.splice(3,0,{t:'So sánh Hệ A và Hệ B',b:['Hệ A: cản nhỏ, Q cao, đỉnh nhọn','Hệ B: cản lớn, Q thấp, đỉnh tù','Q cao lên chậm nhưng biên độ cao hơn nhiều'],cap:'Cùng lực cưỡng bức, hai hệ cộng hưởng',n:'Chỉ vào hai khối: A lên chậm tới biên độ lớn, B lên nhanh nhưng thấp. Chỉnh hệ số cản B ở phòng lab.'});
+SC.splice(3,0,(x,w,h,t)=>{const wd=w0(S.LD),tt=(t*2.5)%12,ph=t*7,A0=1/(2*S.G*wd);[[S.G,'#d71920','Hệ A'],[S.G*rB,'#2563eb','Hệ B']].forEach(([g,c,n],i)=>{const cx=w*(.27+.46*i),Am=(1/(2*g*wd))/A0*(1-Math.exp(-g*tt)),y=h*.5+Math.sin(ph)*Am*h*.3;x.strokeStyle=css('--mut');x.lineWidth=3;x.beginPath();x.moveTo(cx-40,22);x.lineTo(cx+40,22);x.stroke();x.beginPath();x.moveTo(cx,22);for(let k=1;k<=12;k++)x.lineTo(cx+(k%2?12:-12),22+(y-52-22)*k/12);x.lineTo(cx,y-26);x.lineWidth=2;x.stroke();x.fillStyle=c;x.fillRect(cx-28,y-26,56,52);x.fillStyle=css('--ink');x.font='600 14px Be Vietnam Pro';x.textAlign='center';x.fillText(n+'  Q = '+(wd/(2*g)).toFixed(1),cx,h-14);x.textAlign='left'})});
+function toast(m){const d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#171717;color:#fff;padding:10px 16px;border-radius:99px;z-index:300;font-size:14px;max-width:90vw;text-align:center';document.body.append(d);setTimeout(()=>d.remove(),3500)}
+const VT=[['Con lắc Barton','con lắc Barton thí nghiệm vật lý'],['Tacoma Narrows 1940','Tacoma Narrows bridge 1940 collapse'],['Cầu Millennium','Millennium Bridge London wobble'],['TMD Taipei 101','Taipei 101 tuned mass damper']];let vi=0;
+function vSim(){$('vf').style.display='none';$('vf').src='';$('tv').style.display='block';$('vn').textContent='Bản tái tạo hoạt họa, chạy không cần mạng.'}
+function vTabs(){$('tt').innerHTML='';VT.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v[0];b.className=i==vi?'p':'';b.onclick=()=>{vi=i;vTabs();vSim()};$('tt').append(b)});$('vyt').href='https://www.youtube.com/results?search_query='+encodeURIComponent(VT[vi][1])}
+$('vsim').onclick=vSim;$('vgo').onclick=()=>{const m=$('vu').value.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);if(!m){$('vn').textContent='Link YouTube chưa hợp lệ.';return}$('tv').style.display='none';$('vf').style.display='block';$('vf').src='https://www.youtube-nocookie.com/embed/'+m[1];$('vn').textContent='Nếu khung trống, trang này đang chặn video ngoài: bấm "Bản mô phỏng".'};
+vTabs();vSim();
+(function vl(){const c=$('tv');if(c.style.display!=='none'){const r=c.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){const[x,w,h]=fit(c),t=performance.now()/1000;if(vi==0)SC[0](x,w,h,t);else{x.save();x.beginPath();x.rect(0,0,w,h);x.clip();x.translate(-(vi-1)*w,0);SC[6](x,w*3,h,t);x.restore()}}}requestAnimationFrame(vl)})();
+let cam=null,camT=null,prevG=null,hist=[],camCool=0;const cv=document.createElement('video');cv.id='cv';cv.muted=true;cv.playsInline=true;cv.style.cssText='display:none;position:fixed;right:12px;bottom:84px;width:150px;border-radius:10px;border:2px solid #d71920;transform:scaleX(-1);z-index:106';$('pres').append(cv);
+const cc=document.createElement('canvas');cc.width=32;cc.height=24;const c2x=cc.getContext('2d',{willReadFrequently:true});
+function camTick(){if(!pOn){tCam();return}if(cv.readyState<2)return;c2x.drawImage(cv,0,0,32,24);const d=c2x.getImageData(0,0,32,24).data,g=new Uint8Array(768);let n=0,sx=0;for(let i=0;i<768;i++){g[i]=(d[i*4]+d[i*4+1]+d[i*4+2])/3;if(prevG&&Math.abs(g[i]-prevG[i])>30){n++;sx+=i%32}}prevG=g;const now=Date.now();
+ if(n>35){hist.push([now,1-sx/n/32]);hist=hist.filter(q=>now-q[0]<700);if(hist.length>=4&&now>camCool){const dx=hist[hist.length-1][1]-hist[0][1];if(Math.abs(dx)>.3){pshow(si+(dx>0?1:-1));camCool=now+1500;hist=[]}}}else if(n<8)hist=[]}
+async function tCam(){if(cam){cam.getTracks().forEach(t=>t.stop());cam=null;clearInterval(camT);cv.style.display='none';tg('pH',false);return}try{cam=await navigator.mediaDevices.getUserMedia({video:{width:320,height:240,facingMode:'user'}});cv.srcObject=cam;await cv.play();cv.style.display='block';prevG=null;camT=setInterval(camTick,80);tg('pH',true);toast('Vẫy ngang: đổi slide · vẫy lên: laser theo tay · vẫy xuống: tạm dừng mô phỏng')}catch(e){cam=null;toast('Camera bị chặn trong khung xem trước này. Dùng vuốt ngang đổi slide, vuốt lên/xuống trên hình để laser/tạm dừng.')}}
+(()=>{const b=document.createElement('button');b.id='pH';b.textContent='Cử chỉ tay (H)';b.onclick=tCam;$('pbot').querySelector('.btns').append(b)})();
+addEventListener('keydown',e=>{if(pOn&&e.key.toLowerCase()==='h'&&!/INPUT|TEXTAREA/.test(e.target.tagName))tCam()});
+/* --- upgrade v4: gesture control --- */
+function flash(t){const d=document.createElement('div');d.textContent=t;d.style.cssText='position:fixed;left:50%;top:45%;transform:translate(-50%,-50%) scale(.6);font:800 110px Fraunces,serif;color:#fff;background:rgba(215,25,32,.88);width:210px;height:210px;border-radius:50%;display:grid;place-items:center;z-index:300;opacity:0;transition:.35s;pointer-events:none';$('pres').append(d);requestAnimationFrame(()=>{d.style.opacity='1';d.style.transform='translate(-50%,-50%) scale(1)'});setTimeout(()=>d.style.opacity='0',500);setTimeout(()=>d.remove(),900)}
+function camTick(){if(!pOn){tCam();return}if(cv.readyState<2)return;c2x.drawImage(cv,0,0,32,24);const d=c2x.getImageData(0,0,32,24).data,g=new Uint8Array(768);let n=0,sx=0,sy=0;for(let i=0;i<768;i++){g[i]=(d[i*4]+d[i*4+1]+d[i*4+2])/3;if(prevG&&Math.abs(g[i]-prevG[i])>30){n++;sx+=i%32;sy+=(i/32|0)}}prevG=g;const now=Date.now();
+ if(n>30){const X=1-sx/n/32,Y=sy/n/24;hist.push([now,X,Y]);hist=hist.filter(q=>now-q[0]<700);if(laser){const l=$('plas');l.style.left=X*innerWidth+'px';l.style.top=Y*innerHeight+'px'}
+  if(hist.length>=4&&now>camCool){const a=hist[0],b=hist[hist.length-1],dx=b[1]-a[1],dy=b[2]-a[2];
+   if(Math.abs(dx)>.3&&Math.abs(dx)>Math.abs(dy)*1.4){pshow(si+(dx>0?1:-1));flash(dx>0?'→':'←')}
+   else if(Math.abs(dy)>.3&&Math.abs(dy)>Math.abs(dx)*1.4){if(dy<0){tLaser();flash('◎')}else{S.run=!S.run;$('bRun').textContent=S.run?'Tạm dừng':'Chạy tiếp';flash(S.run?'▶':'⏸')}}
+   else return;camCool=now+1500;hist=[]}}
+ else if(n<8)hist=[]}
+(()=>{const b=document.createElement('button');b.id='hGes';b.textContent='✋ Trình chiếu bằng cử chỉ tay';b.onclick=()=>{$('bPres').click();tCam()};$('hCta').parentNode.append(b);const p=$('phelp').querySelector('p');p.innerHTML+='<br><b>Cử chỉ tay (H)</b>: vẫy ngang đổi slide · vẫy lên bật laser (laser theo tay) · vẫy xuống tạm dừng mô phỏng'})();
+/* --- upgrade v5: touch gestures --- */
+let vy0=0,vx0=0,onPv=false;$('pres').addEventListener('touchstart',e=>{onPv=e.target.id==='pv';vy0=e.touches[0].clientY;vx0=e.touches[0].clientX},{passive:true});
+$('pres').addEventListener('touchend',e=>{if(pen||!onPv)return;const dy=e.changedTouches[0].clientY-vy0,dx=e.changedTouches[0].clientX-vx0;if(Math.abs(dy)>70&&Math.abs(dy)>Math.abs(dx)*1.5){if(dy<0){tLaser();flash('◎')}else{S.run=!S.run;$('bRun').textContent=S.run?'Tạm dừng':'Chạy tiếp';flash(S.run?'▶':'⏸')}}},{passive:true});
+/* loop */
+let last=performance.now(),tick=0,pkA=0;sync();reset();
+function loop(t){const dt=Math.min(.033,(t-last)/1000);last=t;dtF=dt;
+ if(S.run){for(let i=0;i<4;i++){step(dt/4);} // D swings freely; keep amplitude steady
+  const wd=w0(S.LD);D.x=D.x; }
+ if(S.run&&!S.drag){const e=.5*D.v*D.v+.5*w0(S.LD)**2*D.x*D.x,t0=.5*w0(S.LD)**2*.25;const k=Math.sqrt(t0/Math.max(e,1e-6));if(isFinite(k)&&Math.abs(k-1)>1e-3){D.x*=1+(k-1)*.02;D.v*=1+(k-1)*.02}}
+ if(++tick%3==0){const j=1;S.rec.push([S.t,P[S.sel].x]);if(S.rec.length>1200)S.rec.shift();
+  const mA=Math.max(...peak);$('ka').textContent=f2(mA,2)+' đv';$('kp').textContent=(Math.atan2(2*S.G*w0(S.LD),w0(S.Ls[S.sel])**2-w0(S.LD)**2)*180/Math.PI).toFixed(0)+'° (P'+(S.sel+1)+')'}
+ wave(t);draw(t);if(tick%4==0)charts();phasor();requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+</script></body></html>
