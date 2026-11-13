@@ -230,7 +230,7 @@ body.pon>.wmx{display:none}
 #cPin{text-align:center;font:700 34px/1.1 'JetBrains Mono',monospace;letter-spacing:.12em}
 #cSt,#cMsg{text-align:center;font-size:14px;color:var(--mut);margin:10px 0}
 #cIn{width:100%;font:700 28px 'JetBrains Mono',monospace;text-align:center;letter-spacing:.3em;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);margin-bottom:10px}
-#cMode{display:flex;flex-direction:column;gap:8px}#cMode small{display:block;font-weight:400;opacity:.75}
+#cMode{display:flex;flex-direction:column;gap:8px}.cbox [hidden]{display:none!important}#cDbg{font:11px 'JetBrains Mono',monospace;color:var(--mut);text-align:center;margin-bottom:8px;word-break:break-all}#cMode small{display:block;font-weight:400;opacity:.75}
 #rmt{position:fixed;inset:0;z-index:390;background:#0f1117;color:#f3f4f6;display:flex;flex-direction:column;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(12px + env(safe-area-inset-bottom,0px));overflow:auto}#rmt[hidden]{display:none}
 #rmt .rh{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#9ca3af}
 #rsw{background:#181b24;border:1px solid #2a2f3c;border-radius:16px;padding:14px;touch-action:pan-y}
@@ -1443,6 +1443,7 @@ const needPeer=()=>loadJS('https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs
 const needQR=()=>loadJS('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js',()=>window.qrcode);
 const newPin=()=>String(100000+crypto.getRandomValues(new Uint32Array(1))[0]%900000);
 const fmtPin=p=>p.slice(0,3)+' '+p.slice(3);
+const ICE=[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:global.stun.twilio.com:3478'},{urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'],username:'peerjs',credential:'peerjsp'},{urls:['turn:openrelay.metered.ca:80','turn:openrelay.metered.ca:443','turn:openrelay.metered.ca:443?transport=tcp'],username:'openrelayproject',credential:'openrelayproject'}];
 const root=()=>document.fullscreenElement||document.body;
 let role=null,peer=null,hconns=[],cconn=null,lastKey='',HELLO=null,ST=null,elAt=0,pinNow='',wl=null;
 
@@ -1459,7 +1460,7 @@ M.innerHTML=`<div class="cbox">
 <div id="cShow" hidden><img id="cQR" alt="Mã QR kết nối"><div id="cPin"></div><div id="cSt"></div><button id="cStop" style="width:100%">Kết thúc phiên</button></div></div>
 <div id="cpC" hidden><p>Nhập mã PIN 6 số hiển thị trên máy trình bày, hoặc quét mã QR bằng camera điện thoại.</p>
 <input id="cIn" inputmode="numeric" maxlength="6" placeholder="······" autocomplete="off">
-<button class="p" id="cGo" style="width:100%">Kết nối</button><div id="cMsg"></div>
+<button class="p" id="cGo" style="width:100%">Kết nối</button><div id="cMsg"></div><div id="cDbg"></div>
 <div id="cMode" hidden><button class="p" id="mR">Remote điều khiển<small>Trước / Sau, laser, ghi chú diễn giả</small></button><button id="mS">Đồng bộ màn hình<small>Tự chuyển slide, cuộn trang và con trỏ theo máy trình bày</small></button></div></div>
 </div>`;
 document.body.append(M);
@@ -1467,7 +1468,7 @@ const R=document.createElement('div');R.id='rmt';R.hidden=true;
 R.innerHTML=`<div class="rh"><span id="rst">Đang kết nối…</span><button id="rx" style="padding:6px 12px">Ngắt kết nối</button></div>
 <div id="rsw"><span id="rtm">00:00</span><small id="rsec"></small><div id="rn">Slide – / –</div><h3 id="rti"></h3></div>
 <div class="rb"><button id="rP">◀ Trước</button><button class="p" id="rN">Tiếp ▶</button></div>
-<div class="rg"><button id="rO">Bắt đầu</button><button id="rL">Laser</button><button id="rD">Bút</button><button id="rS">Rọi</button><button id="rNt">Ghi chú</button><button id="rB">Màn đen</button><button id="rF">Đầu</button><button id="rE">Cuối</button></div>
+<div class="rg"><button id="rO">Bắt đầu</button><button id="rL">Laser</button><button id="rD">Bút</button><button id="rS">Rọi</button><button id="rNt">Ghi chú</button><button id="rBk">Màn đen</button><button id="rF">Đầu</button><button id="rE">Cuối</button></div>
 <select id="rsel" aria-label="Chuyển tới slide"></select>
 <div id="rpad">Chạm &amp; kéo trong khung này để dùng con trỏ laser trên máy trình bày</div>
 <div style="font-size:12px;color:#9ca3af">Ghi chú diễn giả</div><div id="rnote"></div>`;
@@ -1493,7 +1494,7 @@ async function hostStart(){
   try{await needPeer();await needQR()}catch(_){g.disabled=false;g.textContent='Tạo mã kết nối';toast('Không tải được thư viện kết nối. Kiểm tra Internet.');return}
   if(peer){try{peer.destroy()}catch(_){}}
   let tries=0;
-  const mk=()=>{pinNow=newPin();peer=new Peer(PFX+pinNow);
+  const mk=()=>{pinNow=newPin();peer=new Peer(PFX+pinNow,{config:{iceServers:ICE}});
     peer.on('open',()=>{role='host';
       const q=qrcode(0,'M');q.addData(location.href.split('#')[0].split('?')[0]+'?r='+pinNow);q.make();$('cQR').src=q.createDataURL(6,3);
       $('cPin').textContent=fmtPin(pinNow);g.hidden=true;$('cShow').hidden=false;hStat()});
@@ -1530,28 +1531,49 @@ let pTm=0;
 const pt=(e,d)=>{if(!hconns.length)return;const n=performance.now();if(!d&&n-pTm<40)return;pTm=n;const m={t:'pt',x:e.clientX/innerWidth,y:e.clientY/innerHeight,d:d?1:0};hconns.forEach(c=>c.open&&c.send(m))};
 addEventListener('pointermove',e=>pt(e,0),{passive:true});addEventListener('pointerdown',e=>pt(e,1),{passive:true});
 $('cGen').onclick=hostStart;$('cStop').onclick=hostStop;
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&role==='host'&&peer&&peer.disconnected){try{peer.reconnect()}catch(_){}}});
 
 /* --- PHÍA THIẾT BỊ KẾT NỐI (client) --- */
 const msg=t=>$('cMsg').textContent=t;
+const dbg=t=>$('cDbg').textContent=t,TMO=window.BL_CONN_TIMEOUT||12000;let attemptId=0;
 async function clientStart(pin){
   if(!/^\d{6}$/.test(pin)){msg('Mã PIN gồm đúng 6 chữ số.');return}
-  msg('Đang kết nối…');$('cMode').hidden=true;
+  msg('Đang kết nối…');dbg('');$('cMode').hidden=true;
   try{await needPeer()}catch(_){msg('Không tải được thư viện kết nối. Kiểm tra Internet.');return}
   if(role==='host')hostStop();
-  if(peer){try{peer.destroy()}catch(_){}}
-  let done=false;const to=setTimeout(()=>{if(!done)msg('Hết thời gian chờ. Kiểm tra mã PIN và mạng của cả hai thiết bị.')},15000);
-  peer=new Peer();
-  peer.on('open',()=>{cconn=peer.connect(PFX+pin,{reliable:true});
-    cconn.on('open',()=>{done=true;clearTimeout(to);role='pending';pinNow=pin;msg('Đã kết nối. Chọn chế độ:');$('cMode').hidden=false});
-    cconn.on('data',cData);
-    cconn.on('close',()=>endClient('Máy trình bày đã ngắt kết nối.'))});
-  peer.on('error',e=>{clearTimeout(to);msg(e.type==='peer-unavailable'?'Không tìm thấy mã PIN này. Hãy kiểm tra lại.':'Lỗi kết nối: '+e.type)});
+  const id=++attemptId;
+  for(let n=1;n<=3;n++){
+    if(id!==attemptId)return;
+    const r=await tryConnect(pin,n);
+    if(id!==attemptId||r==='ok')return;
+    if(r==='nopeer'){msg('Không tìm thấy mã PIN này. Hãy kiểm tra lại mã và đảm bảo máy trình bày đang hiển thị mã.');return}
+    if(n<3)msg(`Chưa kết nối được, đang thử lại (${n+1}/3)…`);
+  }
+  msg('Không kết nối được. Kiểm tra: máy trình bày vẫn mở và đang hiển thị mã · cả hai thiết bị có Internet · thử cùng một mạng wifi · tắt VPN.');
 }
-function endClient(t){try{cconn&&cconn.close()}catch(_){}try{peer&&peer.destroy()}catch(_){}
+function tryConnect(pin,n){return new Promise(res=>{
+  try{peer&&peer.destroy()}catch(_){}
+  cconn=null;
+  const cfg={iceServers:ICE};if(n===2)cfg.iceTransportPolicy='relay';
+  let fin=false,poll=0,to=0;
+  const end=r=>{if(fin)return;fin=true;clearTimeout(to);clearInterval(poll);res(r)};
+  to=setTimeout(()=>{try{cconn&&cconn.close()}catch(_){}end('timeout')},window.BL_CONN_TIMEOUT||TMO);
+  const p=new Peer({config:cfg});peer=p;
+  p.on('error',e=>{if(e.type==='peer-unavailable')end('nopeer');else{dbg('lỗi: '+e.type);end('err')}});
+  p.on('open',()=>{
+    const c=p.connect(PFX+pin,{reliable:true});cconn=c;
+    poll=setInterval(()=>{const pc=c.peerConnection;dbg(pc?`lần ${n}/3 · ice: ${pc.iceConnectionState} · kênh: ${pc.connectionState}`:`lần ${n}/3 · đang gửi yêu cầu…`)},500);
+    c.on('open',()=>{pinNow=pin;role='pending';msg('Đã kết nối. Chọn chế độ:');dbg('');$('cMode').hidden=false;end('ok')});
+    c.on('data',cData);
+    c.on('error',()=>{});
+    c.on('close',()=>{if(role)endClient('Máy trình bày đã ngắt kết nối.')});
+  });
+})}
+function endClient(t){attemptId++;try{cconn&&cconn.close()}catch(_){}try{peer&&peer.destroy()}catch(_){}
   cconn=null;peer=null;role=null;R.hidden=true;dot.style.display='none';$('cMode').hidden=true;dots();try{wl&&wl.release()}catch(_){}wl=null;if(t)toast(t)}
-function pick(m){if(!cconn)return;cconn.send({t:'mode',m});role=m;M.hidden=true;dots();
+function pick(m){if(!cconn||!cconn.open||role!=='pending'){msg('Chưa kết nối. Hãy kết nối bằng mã PIN trước.');$('cMode').hidden=true;return}cconn.send({t:'mode',m});role=m;M.hidden=true;dots();
   history.replaceState(null,'',location.href.split('?')[0]);
-  if(m==='remote'){R.hidden=false;$('rst').textContent='● Đã kết nối · PIN '+fmtPin(pinNow);fillSel();try{navigator.wakeLock.request('screen').then(x=>wl=x)}catch(_){}}
+  if(m==='remote'){R.hidden=false;$('rst').textContent='● Đã kết nối · PIN '+fmtPin(pinNow);fillSel();try{navigator.wakeLock.request('screen').then(x=>wl=x).catch(()=>{})}catch(_){}}
   if(ST)cData(ST)}
 $('mR').onclick=()=>pick('remote');$('mS').onclick=()=>pick('sync');
 $('cGo').onclick=()=>clientStart($('cIn').value.trim());
@@ -1579,13 +1601,13 @@ function rUpd(m){
   $('rsec').textContent=m.po?m.sec:'MÁY TRÌNH BÀY SẴN SÀNG';
   $('rti').textContent=m.ti;$('rnote').textContent=m.note||'—';
   $('rO').textContent=m.po?'Thoát':'Bắt đầu';$('rO').classList.toggle('p',!m.po);
-  [['rL','lz'],['rD','pn'],['rS','sp'],['rNt','nt'],['rB','bl']].forEach(([i,k])=>$(i).classList.toggle('p',!!m[k]));
+  [['rL','lz'],['rD','pn'],['rS','sp'],['rNt','nt'],['rBk','bl']].forEach(([i,k])=>$(i).classList.toggle('p',!!m[k]));
   $('rsel').value=m.si;elAt=Date.now();
 }
 setInterval(()=>{if(role==='remote'&&ST&&ST.po){const e=ST.el+Math.floor((Date.now()-elAt)/1000);$('rtm').textContent=String(Math.floor(e/60)).padStart(2,'0')+':'+String(e%60).padStart(2,'0')}},500);
 const send=o=>{if(cconn&&cconn.open)cconn.send(o)},vib=()=>navigator.vibrate&&navigator.vibrate(15);
 const cmd=(id,c)=>$(id).onclick=()=>{vib();send({t:'cmd',c})};
-cmd('rP','prev');cmd('rN','next');cmd('rL','laser');cmd('rD','pen');cmd('rS','spot');cmd('rNt','note');cmd('rB','blank');cmd('rF','first');cmd('rE','last');
+cmd('rP','prev');cmd('rN','next');cmd('rL','laser');cmd('rD','pen');cmd('rS','spot');cmd('rNt','note');cmd('rBk','blank');cmd('rF','first');cmd('rE','last');
 $('rO').onclick=()=>{vib();send({t:'cmd',c:ST&&ST.po?'close':'open'})};
 $('rsel').onchange=e=>send({t:'cmd',c:'goto',i:+e.target.value});
 let sx=0;$('rsw').addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
