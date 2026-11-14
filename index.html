@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="author" content="Lê Hoàng Hải">
+<meta name="theme-color" content="#d71920">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="copyright" content="© Lê Hoàng Hải · BartonLab Pro">
 <title>BartonLab Pro – Dao Động Cưỡng Bức & Con Lắc Barton</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -242,6 +246,54 @@ body.pon>.wmx{display:none}
 #rmt select{width:100%;padding:10px;border-radius:10px;background:#181b24;color:#f3f4f6;border:1px solid #2a2f3c;font:inherit}
 #rmt button{background:#1f2430;color:#f3f4f6;border:1px solid #2f3646;border-radius:12px}#rmt button.p{background:var(--red);border-color:var(--red)}
 #rdot{position:fixed;width:26px;height:26px;margin:-13px;border-radius:50%;border:3px solid #ff2a2a;box-shadow:0 0 14px rgba(255,40,40,.6);z-index:240;pointer-events:none;display:none;transition:left .06s,top .06s}
+
+/* ===== ANIMATION NÂNG CAO ===== */
+.rv{opacity:0;transform:translateY(30px) scale(.985);filter:blur(5px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1),filter .8s;transition-delay:var(--d,0ms)}
+.rv.in{opacity:1;transform:none;filter:none}
+section>h2{position:relative}section>h2::after{content:'';display:block;height:3px;width:0;margin-top:10px;border-radius:3px;background:linear-gradient(90deg,var(--red),transparent);transition:width 1s .3s cubic-bezier(.2,.8,.2,1)}section>h2.in::after{width:84px}
+.ch{display:inline-block;animation:chIn .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*45ms + .1s)}
+@keyframes chIn{from{opacity:0;transform:translateY(.7em) rotate(6deg);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+.card{position:relative}.card::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(215,25,32,.12),transparent 62%)}.card:hover::before{opacity:1}
+.rpl{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:rplk .65s ease-out forwards;pointer-events:none}@keyframes rplk{to{transform:scale(1);opacity:0}}
+#pbody.go h2{animation:h2In .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes h2In{from{opacity:0;transform:translateX(calc(var(--dir,1)*-34px));filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+#pbody.go li{animation:liIn .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.18s + var(--k,0)*.12s)}
+@keyframes liIn{from{opacity:0;transform:translateX(calc(var(--dir,1)*28px))}to{opacity:1;transform:none}}
+#pbody.go canvas,#pbody.go iframe,#pbody.go img{animation:zIn .9s .25s cubic-bezier(.2,.8,.2,1) both}
+@keyframes zIn{from{opacity:0;transform:scale(.94) translateY(14px)}to{opacity:1;transform:none}}
+#pbody.go .tc{animation:pop .6s cubic-bezier(.2,1.3,.3,1) both;animation-delay:calc(.15s + var(--k,0)*.08s)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.9)}to{opacity:1;transform:none}}
+#pbody li:nth-child(1){--k:0}#pbody li:nth-child(2){--k:1}#pbody li:nth-child(3){--k:2}#pbody li:nth-child(4){--k:3}#pbody li:nth-child(5){--k:4}#pbody li:nth-child(6){--k:5}#pbody li:nth-child(7){--k:6}#pbody li:nth-child(8){--k:7}.tc:nth-child(1){--k:0}.tc:nth-child(2){--k:1}.tc:nth-child(3){--k:2}.tc:nth-child(4){--k:3}.tc:nth-child(5){--k:4}.tc:nth-child(6){--k:5}.tc:nth-child(7){--k:6}
+#pbar{transition:width .6s cubic-bezier(.2,.8,.2,1)}
+#trail{position:fixed;inset:0;pointer-events:none;z-index:105}
+#nbar{position:absolute;left:0;bottom:0;height:3px;border-radius:3px;background:var(--red);transition:transform .45s cubic-bezier(.2,.8,.2,1),width .45s;pointer-events:none}
+#nav a{transition:color .3s}#nav a.act{color:var(--ink)}
+#shr,#cmdk{position:fixed;inset:0;z-index:410;background:rgba(10,12,18,.8);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px}#cmdk{align-items:flex-start;padding-top:14vh}#shr[hidden],#cmdk[hidden]{display:none}
+#kIn{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:inherit;font-size:16px;margin-bottom:8px}
+#kList{max-height:50vh;overflow:auto}.ki{display:flex;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:14px}.ki b{width:18px;color:var(--red);text-align:center}.ki.on,.ki:hover{background:var(--bg2)}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}.ch,#pbody.go *{animation:none!important}}
+@media print{.rv{opacity:1!important;transform:none!important;filter:none!important}}
+.lite .rv,.lite .ch,.lite #pbody.go *{filter:none!important}.lite *{backdrop-filter:none!important}.lite .card::before,.lite #trail{display:none!important}.lite .rv{transition-duration:.35s}
+#d3slot{position:relative;height:min(74vh,580px)}#d3w{position:relative;width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(ellipse at 50% 25%,rgba(215,25,32,.1),transparent 70%)}
+#d3c{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.d3t{position:absolute;left:10px;top:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap}
+.d3b{padding:6px 11px;font-size:12px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--ink)}.d3b.on{background:var(--red);border-color:var(--red);color:#fff}
+.d3s,.d3a{position:absolute;bottom:10px;font-size:11px;color:var(--mut);background:color-mix(in srgb,var(--bg) 80%,transparent);padding:8px 10px;border-radius:12px;width:min(200px,46%)}.d3s{left:10px;display:grid;gap:4px}.d3a{right:10px}.d3s input{width:100%}
+.d3a div{display:flex;align-items:center;gap:6px;margin:3px 0}.d3a span{width:22px}.d3a i{flex:1;height:7px;border-radius:4px;background:var(--line);overflow:hidden}.d3a b{display:block;height:100%;width:0;background:#3b82f6}.d3a .d b{background:#d71920}.d3a .top b{background:#22c55e}
+#d3e{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--mut)}#d3e[hidden]{display:none}
+#film{padding:0;height:420vh;position:relative}
+.fstick{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 50% 15%,#34161a,#0b0d13 72%)}
+#fc{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fcap{position:absolute;left:6vw;bottom:12vh;max-width:min(520px,84vw);color:#f3f4f6;opacity:0;pointer-events:none;text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.fcap h3{margin:0 0 8px;font:800 clamp(26px,5vw,52px)/1.08 Fraunces,Georgia,serif}.fcap p{margin:0;font-size:clamp(14px,1.8vw,19px);color:#d1d5db}
+.fhint{position:absolute;left:50%;bottom:3vh;transform:translateX(-50%);color:#9ca3af;font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:opacity .4s}
+.fdots{position:absolute;right:16px;top:50%;transform:translateY(-50%);display:grid;gap:10px}.fdots i{width:7px;height:7px;border-radius:50%;background:#ffffff55;transition:.3s}.fdots i.on{background:#d71920;transform:scale(1.5)}
+.hero{isolation:isolate}
+.plx{position:absolute;z-index:-1;pointer-events:none;border-radius:50%;will-change:transform;transform:translate3d(calc(var(--px,0)*var(--m)*1px),calc(var(--py,0)*var(--m)*1px + var(--sy,0)*var(--s)*1px),0)}
+.plx.a{width:46vmin;height:46vmin;right:-8vmin;top:6vmin;background:radial-gradient(circle,rgba(215,25,32,.35),transparent 68%);filter:blur(10px)}
+.plx.b{width:30vmin;height:30vmin;left:-6vmin;bottom:2vmin;border:2px solid rgba(215,25,32,.35)}
+.plx.c{width:14vmin;height:14vmin;right:22vmin;bottom:10vmin;border:1px dashed rgba(150,150,170,.55)}
+.lite .plx.a{filter:none}
 </style>
 </head>
 <body>
@@ -259,6 +311,7 @@ body.pon>.wmx{display:none}
 
 <nav id="nav">
   <a href="#lab">Phòng thí nghiệm</a>
+  <a href="#d3">Mô hình 3D</a>
   <a href="#phase">Pha $\Delta\varphi$</a>
   <a href="#theory">Công thức chuẩn</a>
   <a href="#cases">Ca thực tế</a>
@@ -272,6 +325,13 @@ body.pon>.wmx{display:none}
   <button id="bHelp" aria-label="Phím tắt" style="padding:6px 12px">?</button>
   <button id="bTheme" aria-label="Đổi giao diện sáng tối" style="padding:6px 12px">◐</button>
 </nav>
+
+<section id="film" aria-label="Phim 3D cuộn theo trang"><div class="fstick"><canvas id="fc"></canvas>
+<div class="fcap"><h3>Dây đàn hồi truyền dao động</h3><p>Một con lắc phát động làm xoắn sợi dây, và dây truyền năng lượng sang các con lắc còn lại.</p></div>
+<div class="fcap"><h3>Năm con lắc, năm tần số riêng</h3><p>Mỗi con lắc có chiều dài khác nhau, nên tần số dao động riêng cũng khác nhau.</p></div>
+<div class="fcap"><h3>Cộng hưởng</h3><p>Con lắc có chiều dài gần con lắc phát động sẽ lắc mạnh nhất, biên độ bứt phá.</p></div>
+<div class="fcap"><h3>Nhìn từ mọi góc</h3><p>Cuộn tiếp để vào phòng thí nghiệm và tự điều chỉnh các thông số.</p></div>
+<div class="fhint">Cuộn để khám phá ↓</div><div class="fdots"><i></i><i></i><i></i><i></i></div></div></section>
 
 <section id="lab">
   <h2>Phòng thí nghiệm ảo</h2>
@@ -318,6 +378,12 @@ body.pon>.wmx{display:none}
     <div class="card"><h4>Độ lệch pha $\varphi(f)$ – mốc $\pi/2$ tại $f_0$</h4><canvas id="c3"></canvas></div>
     <div class="card"><h4>Công suất trung bình $\langle P(f) \rangle = \frac{1}{2}b\omega^2 A^2$</h4><canvas id="c4"></canvas></div>
   </div>
+</section>
+
+<section id="d3">
+  <h2>Mô hình 3D · Con lắc Barton</h2>
+  <p class="sub">Kéo để xoay, cuộn chuột để thu phóng. Con lắc đỏ phát động, con lắc xanh có chiều dài gần $L_D$ (vòng xanh lá) sẽ lắc mạnh nhất. Mô hình dùng chung số liệu với phòng thí nghiệm 2D.</p>
+  <div class="card"><div id="d3slot"></div></div>
 </section>
 
 <section id="phase">
@@ -477,7 +543,7 @@ body.pon>.wmx{display:none}
       <b>P</b> vào chế độ trình bày · <b>← → Space</b> chuyển slide · <b>Home/End</b> đầu/cuối<br>
       <b>G</b> tổng quan các slide · <b>B</b> màn đen · <b>F</b> toàn màn hình · <b>A</b> tự chạy 15s<br>
       <b>L</b> tia laser · <b>D</b> bút vẽ · <b>C</b> xóa nét · <b>S</b> đèn rọi · <b>N</b> ghi chú diễn giả<br>
-      <b>H</b> cử chỉ tay qua camera · <b>V</b> hiện/ẩn khung camera · <b>K</b> kết nối thiết bị từ xa · <b>Esc</b> thoát
+      <b>H</b> cử chỉ tay qua camera · <b>V</b> hiện/ẩn khung camera · <b>K</b> kết nối thiết bị từ xa · <b>Ctrl+K</b> hoặc <b>/</b> tìm nhanh · <b>Esc</b> thoát
     </p>
     <button class="p" id="hx">Đóng</button>
   </div>
@@ -568,7 +634,7 @@ body.pon>.wmx{display:none}
 <script>
 const $=id=>document.getElementById(id),TAU=Math.PI*2,g=9.81;
 const dark=()=>matchMedia('(prefers-color-scheme:dark)').matches&&document.documentElement.dataset.theme!=='light';
-function fit(c){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return[x,r.width,r.height]}
+function fit(c){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,document.documentElement.classList.contains('lite')?1:2);c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return[x,r.width,r.height]}
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
 function renderAllMath(root=document.body){
@@ -772,6 +838,13 @@ const SLIDES=[
     scene:6
   },
   {
+    sec:'MÔ HÌNH 3D',
+    t:'Mô hình 3D con lắc Barton',
+    b:[],
+    d3:true,
+    n:'Xoay mô hình để chỉ ra con lắc xanh có chiều dài gần con lắc phát động đạt biên độ lớn nhất (cộng hưởng). Kéo thanh L_D để cho thấy đỉnh cộng hưởng dịch chuyển sang con lắc khác.'
+  },
+  {
     sec:'TỔNG KẾT ĐỀ ÁN',
     t:'11. Kết luận &amp; Ý nghĩa thực tiễn',
     b:[
@@ -808,6 +881,11 @@ function pshow(i){
     $('psec').textContent=s.sec;$('pnote').textContent=s.n;
     $('pcnt').textContent='Slide '+(si+1)+' / '+SLIDES.length;
     $('pbar').style.width=(si+1)/SLIDES.length*100+'%';return;
+  }
+  if(s.d3){
+    b.innerHTML='<div class="tm"><h2>Mô hình 3D con lắc Barton</h2><div id="d3slot2" style="position:relative;height:62vh"></div></div>';b.classList.add('go');
+    $('psec').textContent=s.sec;$('pnote').textContent=s.n;$('pcnt').textContent='Slide '+(si+1)+' / '+SLIDES.length;$('pbar').style.width=(si+1)/SLIDES.length*100+'%';
+    window.mount3d&&mount3d($('d3slot2'));return;
   }
   let mediaHtml='';
   if(s.video){
@@ -1628,6 +1706,208 @@ const qp=new URLSearchParams(location.search).get('r');
 if(/^\d{6}$/.test(qp||'')){openConn('C');$('cIn').value=qp;clientStart(qp)}
 })();
 
+/* ===== NÂNG CẤP ANIMATION & TÍNH NĂNG: tìm nhanh, chia sẻ QR, hiệu ứng ===== */
+(()=>{
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,root=()=>document.fullscreenElement||document.body;
+const norm=t=>t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+const plain=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent.replace(/\$[^$]*\$/g,'').replace(/\s+/g,' ').trim()};
+const lab=a=>{const c=a.cloneNode(true);c.querySelectorAll('.katex-mathml').forEach(x=>x.remove());return c.textContent.replace(/\s+/g,' ').trim()};
+/* chữ tiêu đề hiện lần lượt */
+const t=$('ttl');if(t&&!RM){const x=t.textContent;let i=0;t.setAttribute('aria-label',x);t.innerHTML=x.split(' ').map(w=>'<span style="white-space:nowrap">'+[...w].map(c=>`<span class="ch" aria-hidden="true" style="--i:${i++}">${c}</span>`).join('')+'</span>').join(' ')}
+/* các phần trang trượt vào khi cuộn */
+if(!RM&&'IntersectionObserver' in window){
+  document.querySelectorAll('section:not(#film)').forEach(sc=>[...sc.children].forEach((e,i)=>{e.classList.add('rv');e.style.setProperty('--d',(i%5)*70+'ms')}));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.06,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+}
+/* ánh sáng theo con trỏ trên thẻ + gợn sóng khi bấm nút */
+addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}},{passive:true});
+document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('button');if(!b||RM)return;
+  const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*2,sp=document.createElement('span'),pos=b.style.position,ov=b.style.overflow;
+  if(getComputedStyle(b).position==='static')b.style.position='relative';b.style.overflow='hidden';
+  sp.className='rpl';sp.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;b.append(sp);
+  setTimeout(()=>{sp.remove();b.style.position=pos;b.style.overflow=ov},650)});
+/* vệt sáng laser khi trình bày (cả laser từ remote) */
+const cv=document.createElement('canvas');cv.id='trail';$('pres').append(cv);const cx=cv.getContext('2d');let lx=null,ly=0;
+const rs=()=>{cv.width=innerWidth;cv.height=innerHeight};rs();addEventListener('resize',rs);
+(function f(){if(pOn&&!RM){cx.globalCompositeOperation='destination-out';cx.fillStyle='rgba(0,0,0,.12)';cx.fillRect(0,0,cv.width,cv.height);cx.globalCompositeOperation='source-over';
+  if(laser){const r=$('plas').getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+    if(lx!==null&&Math.hypot(x-lx,y-ly)<400){cx.strokeStyle='rgba(255,60,60,.85)';cx.lineWidth=5;cx.lineCap='round';cx.shadowColor='#ff2a2a';cx.shadowBlur=14;cx.beginPath();cx.moveTo(lx,ly);cx.lineTo(x,y);cx.stroke()}lx=x;ly=y}else lx=null}
+  pOn?requestAnimationFrame(f):setTimeout(f,250)})();
+/* thanh trượt đánh dấu mục đang xem trên menu */
+const nav=$('nav'),bar=document.createElement('i'),links=[...nav.querySelectorAll('a')];bar.id='nbar';
+if(getComputedStyle(nav).position==='static')nav.style.position='relative';nav.append(bar);
+const setAct=a=>{links.forEach(x=>x.classList.toggle('act',x===a));bar.style.width=a.offsetWidth+'px';bar.style.transform=`translateX(${a.offsetLeft}px)`;
+  if(nav.scrollWidth>nav.clientWidth)nav.scrollTo({left:a.offsetLeft-nav.clientWidth/2+a.offsetWidth/2,behavior:'smooth'})};
+if('IntersectionObserver' in window){const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const a=links.find(l=>l.getAttribute('href')==='#'+e.target.id);a&&setAct(a)}}),{rootMargin:'-45% 0px -50% 0px'});
+  links.forEach(l=>{const sc=document.querySelector(l.getAttribute('href'));sc&&so.observe(sc)})}
+/* chia sẻ trang bằng mã QR cho ban giám khảo */
+const S=document.createElement('div');S.id='shr';S.hidden=true;
+S.innerHTML='<div class="cbox" style="text-align:center"><h3 style="margin:0 0 6px">Mở trang trên điện thoại</h3><p>Quét mã QR để xem trang này trên thiết bị của bạn.</p><img id="shQ" alt="Mã QR" style="width:200px;height:200px;image-rendering:pixelated;background:#fff;border-radius:10px;padding:6px"><div id="shU" style="font-size:12px;color:var(--mut);word-break:break-all;margin:10px 0"></div><button class="p" id="shX" style="width:100%">Đóng</button></div>';
+document.body.append(S);S.onclick=e=>{if(e.target===S)S.hidden=true};$('shX').onclick=()=>S.hidden=true;
+const ld=(u,c)=>new Promise((ok,no)=>{if(c())return ok();const e=document.createElement('script');e.src=u;e.onload=ok;e.onerror=no;document.head.append(e)});
+async function share(){root().append(S);S.hidden=false;const u=location.href.split('#')[0].split('?')[0];$('shU').textContent=u;
+  try{await ld('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js',()=>window.qrcode);const q=qrcode(0,'M');q.addData(u);q.make();$('shQ').src=q.createDataURL(6,3)}catch(_){$('shU').textContent='Không tạo được QR (cần Internet). '+u}}
+const hb=document.createElement('button');hb.textContent='Chia sẻ trang (QR)';hb.onclick=share;$('hCta').parentNode.append(hb);
+/* tìm nhanh: Ctrl+K hoặc / */
+const P=document.createElement('div');P.id='cmdk';P.hidden=true;
+P.innerHTML='<div class="cbox" style="width:min(520px,100%)"><input id="kIn" placeholder="Gõ để tìm slide, phần trang, hành động…" autocomplete="off"><div id="kList"></div></div>';document.body.append(P);
+let items=[],sel=0;
+const acts=()=>[['▶','Chế độ trình bày',()=>$('bPres').click()],['⚡','Chế độ nhẹ: bật / tắt (khi máy yếu bị giật)',()=>toggleLite()],['⬇','Cài đặt như ứng dụng (dùng ngoại tuyến)',()=>installApp()],['⇄','Kết nối thiết bị từ xa',()=>openConn('H')],['▦','Chia sẻ trang cho ban giám khảo (QR)',share],['◐','Đổi giao diện sáng / tối',()=>$('bTheme').click()],
+  ['⛶','Bật / tắt toàn màn hình',()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})],
+  ...links.map(a=>['§','Đi tới: '+lab(a),()=>document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})]),
+  ...SLIDES.map((sl,i)=>['□',`Slide ${i+1}: ${plain(sl.t)}`,()=>{if(!pOn)$('bPres').click();setTimeout(()=>pshow(i),80)}])];
+function rk(q){const n=norm(q.trim());items=acts().filter(x=>norm(x[1]).includes(n));sel=0;
+  $('kList').replaceChildren(...items.slice(0,40).map((x,i)=>{const d=document.createElement('div');d.className='ki'+(i?'':' on');d.innerHTML='<b></b><span></span>';d.firstChild.textContent=x[0];d.lastChild.textContent=x[1];d.onclick=()=>run(i);return d}))}
+const run=i=>{const x=items[i];if(!x)return;P.hidden=true;setTimeout(x[2],30)};
+const mv=d=>{const l=[...$('kList').children];if(!l.length)return;l[sel].classList.remove('on');sel=(sel+d+l.length)%l.length;l[sel].classList.add('on');l[sel].scrollIntoView({block:'nearest'})};
+const openK=()=>{root().append(P);P.hidden=false;$('kIn').value='';rk('');$('kIn').focus()};
+$('kIn').oninput=e=>rk(e.target.value);
+$('kIn').onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();mv(1)}else if(e.key==='ArrowUp'){e.preventDefault();mv(-1)}else if(e.key==='Enter')run(sel);else if(e.key==='Escape')P.hidden=true;e.stopPropagation()};
+P.onclick=e=>{if(e.target===P)P.hidden=true};
+addEventListener('keydown',e=>{const typing=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName);
+  if(((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k')||(e.key==='/'&&!typing)){e.preventDefault();e.stopImmediatePropagation();openK()}},true);
+})();
+
+/* ===== HIỆU NĂNG: chỉ vẽ phần đang nhìn thấy, chế độ nhẹ tự động, dùng ngoại tuyến (PWA) ===== */
+const VIS={hero:true,lab:true};
+(()=>{
+const H=document.documentElement,lite=v=>{H.classList.toggle('lite',v);try{localStorage.setItem('blLite',v?'1':'0')}catch(_){}dispatchEvent(new Event('resize'))};
+let saved=null;try{saved=localStorage.getItem('blLite')}catch(_){}
+if(saved==='1')H.classList.add('lite');
+else if(saved===null&&((navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4))H.classList.add('lite');
+window.toggleLite=()=>{const v=!H.classList.contains('lite');lite(v);toast(v?'Đã bật chế độ nhẹ: ít hiệu ứng, mượt hơn':'Đã tắt chế độ nhẹ')};
+/* tự đo FPS sau khi tải: dưới 38 fps thì bật chế độ nhẹ */
+if(saved===null)setTimeout(()=>{let n=0;const t0=performance.now();(function m(t){n++;if(t-t0<2000)requestAnimationFrame(m);else if(n/((t-t0)/1000)<38&&!H.classList.contains('lite')){lite(true);toast('Máy hơi chậm: đã tự bật chế độ nhẹ')}})(t0)},2500);
+/* ngừng vẽ canvas khi cuộn khỏi tầm nhìn */
+if('IntersectionObserver' in window){
+  const seen=new Map(),upd=()=>{VIS.lab=['lab','phase'].some(k=>seen.get(k))};
+  const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.target.id==='wave'||e.target.classList.contains('hero'))VIS.hero=e.isIntersecting;else{seen.set(e.target.id,e.isIntersecting);upd()}}),{rootMargin:'120px'});
+  const hero=document.querySelector('.hero');hero&&o.observe(hero);['lab','phase'].forEach(i=>{const e=$(i);e&&o.observe(e)});
+}
+/* cài đặt như ứng dụng + ngoại tuyến */
+let ip=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();ip=e});
+window.installApp=()=>ip?ip.prompt():toast('iPhone: nút Chia sẻ → Thêm vào MH chính. Máy tính: biểu tượng cài đặt trên thanh địa chỉ.');
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').then(()=>{let d=null;try{d=localStorage.getItem('blOff')}catch(_){}
+  if(!d){navigator.serviceWorker.ready.then(()=>{toast('Trang đã sẵn sàng dùng ngoại tuyến');try{localStorage.setItem('blOff','1')}catch(_){}})}}).catch(()=>{});
+})();
+
+/* ===== MÔ HÌNH 3D (Three.js): đọc trực tiếp D, P, S của phòng thí nghiệm ===== */
+(()=>{
+const ld=(u,c)=>new Promise((ok,no)=>{if(c())return ok();const e=document.createElement('script');e.src=u;e.onload=ok;e.onerror=no;document.head.append(e)});
+const slot=$('d3slot'),W=document.createElement('div');W.id='d3w';
+W.innerHTML='<canvas id="d3c"></canvas><div class="d3t"><button class="d3b on" id="d3run">⏸ Dừng</button><button class="d3b" id="d3rs">↺ Đặt lại</button><button class="d3b" data-v="0">3D</button><button class="d3b" data-v="1">Bên</button><button class="d3b" data-v="2">Trên</button><button class="d3b" data-v="3">Trước</button><button class="d3b on" id="d3ar">Tự xoay</button><button class="d3b" id="d3zi">＋</button><button class="d3b" id="d3zo">－</button></div>'
+ +'<div class="d3s">'+[['LD','Chiều dài con lắc phát động'],['G','Hệ số tắt dần'],['F','Biên độ ngoại lực']].map(([k,n])=>`<label>${n}<input type="range" id="d3${k}"></label>`).join('')+'</div>'
+ +'<div class="d3a" id="d3a">'+['D','P1','P2','P3','P4','P5'].map((n,i)=>`<div class="${i?'':'d'}"><span>${n}</span><i><b></b></i></div>`).join('')+'</div><div id="d3e" hidden></div>';
+slot.append(W);
+const K=4,H=3.7,XS=[-4.4,-2.2,-.9,.4,1.7,3.0],lite=()=>document.documentElement.classList.contains('lite');
+let T,R,sc,cam,gs=[],sh=[],tr=[],rg=[],amp=[0,0,0,0,0,0],ready=false,secVis=false,booting=null,th=.7,ph=1.15,rad=11,tth=.7,tph=1.15,trad=11,auto=true,drag=null,fr=0;
+const cv=$('d3c'),err=m=>{const e=$('d3e');e.hidden=false;e.textContent=m};
+function init(){
+  T=THREE;
+  try{R=new T.WebGLRenderer({canvas:cv,antialias:!lite(),alpha:true});R.setPixelRatio(Math.min(devicePixelRatio||1,lite()?1:2))}catch(e){err('Thiết bị không hỗ trợ WebGL nên không hiển thị được mô hình 3D.');return}
+  sc=new T.Scene();cam=new T.PerspectiveCamera(42,1,.1,100);
+  sc.add(new T.HemisphereLight(0xffffff,0x8899aa,.95));const dl=new T.DirectionalLight(0xffffff,.8);dl.position.set(4,8,6);sc.add(dl);
+  const grid=new T.GridHelper(16,16,0x888888,0x888888);grid.material.transparent=true;grid.material.opacity=.25;sc.add(grid);
+  const mat=c=>new T.MeshStandardMaterial({color:c,metalness:.3,roughness:.5}),lbl=(t,c)=>{const k=document.createElement('canvas');k.width=128;k.height=64;const x=k.getContext('2d');x.font='700 40px sans-serif';x.fillStyle=c;x.textAlign='center';x.textBaseline='middle';x.fillText(t,64,34);const sp=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(k),transparent:true,depthTest:false}));sp.scale.set(1,.5,1);return sp};
+  [-5.6,4.4].forEach(x=>{const p=new T.Mesh(new T.CylinderGeometry(.09,.09,H+.4,16),mat(0x6b7280));p.position.set(x,(H+.4)/2,0);sc.add(p);const b=new T.Mesh(new T.CylinderGeometry(.5,.6,.12,24),mat(0x4b5563));b.position.set(x,.06,0);sc.add(b)});
+  const rope=new T.Mesh(new T.CylinderGeometry(.035,.035,10,12),mat(0xe5e7eb));rope.rotation.z=Math.PI/2;rope.position.set(-.6,H,0);sc.add(rope);
+  for(let i=0;i<6;i++){
+    const col=i?0x3b82f6:0xd71920,g=new T.Group();g.position.set(XS[i],H,0);
+    const rod=new T.Mesh(new T.CylinderGeometry(.022,.022,1,8),mat(0x9ca3af)),bob=new T.Mesh(new T.SphereGeometry(i?.2:.32,32,24),new T.MeshStandardMaterial({color:col,metalness:.4,roughness:.3,emissive:col,emissiveIntensity:0}));
+    const cl=new T.Mesh(new T.CylinderGeometry(.07,.07,.3,12),mat(0x374151));cl.rotation.z=Math.PI/2;
+    const ring=new T.Mesh(new T.TorusGeometry(.38,.018,8,40),new T.MeshBasicMaterial({color:0x22c55e}));ring.rotation.x=Math.PI/2;ring.visible=false;
+    g.add(rod,bob,cl,ring);sc.add(g);gs.push({rod,bob,g});rg.push(ring);
+    const s2=new T.Mesh(new T.CircleGeometry(.3,24),new T.MeshBasicMaterial({color:0,transparent:true,opacity:.2}));s2.rotation.x=-Math.PI/2;sc.add(s2);sh.push(s2);
+    const tg=new T.BufferGeometry();tg.setAttribute('position',new T.BufferAttribute(new Float32Array(270),3));tg.setDrawRange(0,0);
+    const tl=new T.Line(tg,new T.LineBasicMaterial({color:col,transparent:true,opacity:.55}));tl.frustumCulled=false;sc.add(tl);tr.push({tg,n:0});
+    const lb=lbl(i?'P'+i:'D',i?'#3b82f6':'#d71920');lb.position.set(XS[i],H+.55,0);sc.add(lb);
+  }
+  ready=true;resize();
+}
+function resize(){if(!ready)return;const w=W.clientWidth,h=W.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+new ResizeObserver(resize).observe(W);
+const boot=()=>booting||(booting=ld('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',()=>window.THREE).then(init).catch(()=>err('Không tải được Three.js. Cần Internet ở lần mở đầu tiên.')));
+function frame(){
+  const t=performance.now()/1000,xs=[D.x,...P.map(p=>p.x)];fr++;
+  gs.forEach((o,i)=>{const L=(i?S.Ls[i-1]:S.LD)*K,a=xs[i],ca=Math.cos(a),sa=Math.sin(a);
+    o.g.rotation.x=a;o.rod.scale.y=L;o.rod.position.y=-L/2;o.bob.position.y=-L;rg[i].position.y=-L;
+    o.bob.material.emissiveIntensity=Math.min(1,Math.abs(a)/.7)*.8;amp[i]=Math.max(amp[i]*.992,Math.abs(a));
+    const near=i&&Math.abs(S.Ls[i-1]-S.LD)<.035;rg[i].visible=!!near;if(near)rg[i].scale.setScalar(1+.12*Math.sin(t*6));
+    sh[i].position.set(XS[i],.012,-L*sa);sh[i].scale.setScalar(.7+.3*(H-L*ca)/H);
+    if(!lite()){const T2=tr[i],ps=T2.tg.attributes.position.array;ps.copyWithin(3,0,267);ps[0]=XS[i];ps[1]=H-L*ca;ps[2]=-L*sa;T2.n=Math.min(90,T2.n+1);T2.tg.setDrawRange(0,T2.n);T2.tg.attributes.position.needsUpdate=true}});
+  if(auto&&!drag)tth+=.003;th+=(tth-th)*.08;ph+=(tph-ph)*.08;rad+=(trad-rad)*.08;
+  cam.position.set(-.6+rad*Math.sin(ph)*Math.sin(th),1.9+rad*Math.cos(ph),rad*Math.sin(ph)*Math.cos(th));cam.lookAt(-.6,1.9,0);
+  if(fr%8==0){const bars=$('d3a').querySelectorAll('b'),mx=Math.max(...amp.slice(1));bars.forEach((b,i)=>{b.style.width=Math.min(100,amp[i]/.9*100)+'%';b.parentNode.parentNode.classList.toggle('top',i>0&&amp[i]===mx&&mx>.05)});
+    $('d3run').textContent=S.run?'⏸ Dừng':'▶ Phát động';$('d3run').classList.toggle('on',S.run);
+    ['LD','G','F'].forEach(k=>{const e=$('d3'+k),o=$(k);if(document.activeElement!==e){e.min=o.min;e.max=o.max;e.step=o.step;e.value=o.value}})}
+}
+function r3(){
+  if(!ready){setTimeout(r3,300);return}
+  if(!pOn&&W.closest('#pres'))slot.append(W);
+  if(W.isConnected&&(W.closest('#pres')?pOn:secVis)){frame();R.render(sc,cam);requestAnimationFrame(r3)}else setTimeout(()=>requestAnimationFrame(r3),300);
+}
+r3();
+window.B3={boot,frame,get sc(){return sc},get T(){return T},get ready(){return ready}};
+if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{secVis=e.isIntersecting;if(secVis)boot()}),{rootMargin:'400px'}).observe($('d3'));else{secVis=true;boot()}
+window.mount3d=async el=>{await boot();if(!ready)return;el.append(W);resize()};
+/* điều khiển */
+const view=[[.7,1.15,11],[Math.PI/2,1.5,10],[.3,.06,12],[0,1.5,10]],setAuto=v=>{auto=v;$('d3ar').classList.toggle('on',v)};
+W.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const v=view[+b.dataset.v];tth=v[0];tph=v[1];trad=v[2];setAuto(false)});
+$('d3ar').onclick=()=>setAuto(!auto);$('d3zi').onclick=()=>trad=Math.max(5,trad-1.5);$('d3zo').onclick=()=>trad=Math.min(20,trad+1.5);
+$('d3run').onclick=()=>{S.run=!S.run};$('d3rs').onclick=()=>{reset();amp.fill(0)};
+['LD','G','F'].forEach(k=>$('d3'+k).oninput=e=>{const o=$(k);o.value=e.target.value;o.dispatchEvent(new Event('input'))});
+cv.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY,t:e.pointerType};cv.setPointerCapture(e.pointerId);setAuto(false)};
+cv.onpointermove=e=>{if(!drag)return;tth-=(e.clientX-drag.x)*.008;if(drag.t!=='touch')tph=Math.min(1.55,Math.max(.05,tph-(e.clientY-drag.y)*.006));drag.x=e.clientX;drag.y=e.clientY};
+cv.onpointerup=cv.onpointercancel=()=>drag=null;
+cv.addEventListener('wheel',e=>{e.preventDefault();trad=Math.min(20,Math.max(5,trad+e.deltaY*.01))},{passive:false});
+})();
+
+/* ===== PHIM 3D CUỘN THEO TRANG · NGHIÊNG 3D · PARALLAX ĐỘ SÂU ===== */
+(()=>{
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+/* 1) phim 3D: camera bay qua cảnh Barton theo tiến độ cuộn */
+const film=$('film'),fc=$('fc'),caps=[...film.querySelectorAll('.fcap')],dots=[...film.querySelectorAll('.fdots i')],hint=film.querySelector('.fhint');
+const K=[[0,9,15,-.6,1.6,0],[-6.2,3.4,6.5,-4.4,2.3,0],[2.5,2.2,7,.4,2,0],[9.5,2.8,1,-.6,1.9,0],[-1.5,5.5,12,-.6,1.9,0]];
+const pose=p=>{const n=K.length-1,f=Math.min(p,.9999)*n,i=Math.floor(f),u=f-i,e=u*u*(3-2*u),a=K[i],b=K[i+1];return a.map((v,j)=>v+(b[j]-v)*e)};
+let R2=null,cam2=null,fv=false,pp=0,mx=0,my=0;
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
+function size(){if(!R2)return;const w=fc.clientWidth,h=fc.clientHeight;if(w&&h){R2.setSize(w,h,false);cam2.aspect=w/h;cam2.updateProjectionMatrix()}}
+function loop(){
+  if(!(fv&&R2)){setTimeout(()=>requestAnimationFrame(loop),250);return}
+  const r=film.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));
+  pp=RM?p:pp+(p-pp)*.14;B3.frame();
+  const q=pose(pp);cam2.position.set(q[0]+mx*.8,q[1]-my*.5,q[2]);cam2.lookAt(q[3],q[4],q[5]);R2.render(B3.sc,cam2);
+  const f=Math.min(pp,.9999)*4,i=Math.floor(f),o=Math.sin(Math.PI*(f-i));
+  caps.forEach((c,k)=>{const a=k===i?Math.pow(o,.6):0;c.style.opacity=a;c.style.transform=`translateY(${(1-a)*22}px)`});
+  dots.forEach((d,k)=>d.classList.toggle('on',k===i));hint.style.opacity=pp<.04?1:0;
+  requestAnimationFrame(loop);
+}
+function startFilm(){B3.boot().then(()=>{
+  if(!B3.ready){film.style.display='none';return}
+  try{R2=new B3.T.WebGLRenderer({canvas:fc,antialias:false,alpha:true});R2.setPixelRatio(Math.min(devicePixelRatio||1,document.documentElement.classList.contains('lite')?1:1.75));cam2=new B3.T.PerspectiveCamera(46,1,.1,100);size();new ResizeObserver(size).observe(fc)}catch(_){film.style.display='none'}
+})}
+if('IntersectionObserver' in window){let st=false;new IntersectionObserver(es=>es.forEach(e=>{fv=e.isIntersecting;if(fv&&!st){st=true;startFilm()}}),{rootMargin:'600px 0px'}).observe(film)}else film.style.display='none';
+loop();
+/* 2) thẻ nghiêng 3D theo con trỏ (bỏ qua thẻ có canvas/ô nhập để không ảnh hưởng thao tác) */
+let tc=null;const rst=c=>{c.style.transition='transform .5s cubic-bezier(.2,.8,.2,1)';c.style.transform='';tc=null};
+document.addEventListener('pointermove',e=>{if(RM||e.pointerType==='touch')return;
+  const c=e.target.closest&&e.target.closest('.card');
+  if(tc&&tc!==c)rst(tc);
+  if(!c||c.querySelector('canvas,input,iframe,textarea,select,video'))return;
+  tc=c;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  c.style.transition='transform .08s';c.style.transform=`perspective(900px) rotateX(${(-y*8).toFixed(2)}deg) rotateY(${(x*10).toFixed(2)}deg) translateZ(6px)`},{passive:true});
+document.addEventListener('pointerout',e=>{if(tc&&!tc.contains(e.relatedTarget))rst(tc)});
+/* 3) parallax nhiều lớp ở đầu trang */
+const hero=document.querySelector('.hero');
+if(hero&&!RM){
+  [['a',.25,40],['b',-.12,-30],['c',.42,70]].forEach(([k,sp,m])=>{const d=document.createElement('div');d.className='plx '+k;d.style.setProperty('--s',sp);d.style.setProperty('--m',m);hero.prepend(d)});
+  let tk=0,sy=0,px=0,py=0;const up=()=>{tk=0;hero.style.setProperty('--sy',sy);hero.style.setProperty('--px',px);hero.style.setProperty('--py',py)};
+  addEventListener('scroll',()=>{sy=scrollY;tk||(tk=requestAnimationFrame(up))},{passive:true});
+  addEventListener('pointermove',e=>{px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5;tk||(tk=requestAnimationFrame(up))},{passive:true});
+}
+})();
+
 /* --- MAIN ANIMATION LOOP --- */
 let last=performance.now(),tick=0;sync();reset();
 function loop(t){
@@ -1644,7 +1924,8 @@ function loop(t){
     $('ka').textContent=f2(mA,2)+' đv';
     $('kp').textContent=(Math.atan2(2*S.G*w0(S.LD),w0(S.Ls[S.sel])**2-w0(S.LD)**2)*180/Math.PI).toFixed(0)+'° (P'+(S.sel+1)+')';
   }
-  wave(t);draw(t);if(tick%4==0)charts();phasor();
+  if(VIS.hero)wave(t);
+  if(VIS.lab){draw(t);if(tick%4==0)charts();phasor()}
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
